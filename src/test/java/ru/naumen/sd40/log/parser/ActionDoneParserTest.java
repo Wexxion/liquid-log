@@ -111,4 +111,18 @@ public class ActionDoneParserTest {
         Assert.assertEquals(5, parser.getDtObjectActions());
     }
 
+    @Test
+    public void mustParseCatalogs(){
+        //given:
+        ActionDoneParser parser = new ActionDoneParser();
+
+        //when:
+        parser.parseLine("Done(113):GetCatalogsAction");
+        parser.parseLine("SQL(0) Done(113):GetCatalogsAction");
+        parser.parseLine("SQL(0) Done(41):GetCatalogsAction [getCodes()=null, ]");
+        parser.parseLine("Done(777):GetCatalogAction");
+
+        //then:
+        Assert.assertEquals(3, parser.getCatalogsAction());
+    }
 }

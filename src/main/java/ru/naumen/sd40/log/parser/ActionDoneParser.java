@@ -41,6 +41,8 @@ public class ActionDoneParser
 
     private int getDtObjectActions = 0;
 
+    private int getCatalogsAction = 0;
+
     private int searchActions = 0;
 
     boolean nan = true;
@@ -99,6 +101,8 @@ public class ActionDoneParser
     {
         return getDtObjectActions;
     }
+
+    public int getCatalogsAction() { return getCatalogsAction; }
 
     public int getEditObjectsActions()
     {
@@ -173,42 +177,27 @@ public class ActionDoneParser
         {
             String actionInLowerCase = matcher.group(2).toLowerCase();
             if (EXCLUDED_ACTIONS.contains(actionInLowerCase))
-            {
                 return;
-            }
 
             times.add(Integer.parseInt(matcher.group(1)));
+
             if (actionInLowerCase.equals("addobjectaction"))
-            {
                 addObjectActions++;
-            }
             else if (actionInLowerCase.equals("editobjectaction"))
-            {
                 editObjectsActions++;
-            }
+            else if (actionInLowerCase.equals("getcatalogsaction"))
+                getCatalogsAction++;
             else if (actionInLowerCase.matches("(?i)[a-zA-Z]+comment[a-zA-Z]+"))
-            {
                 commentActions++;
-            }
             else if (!actionInLowerCase.contains("advlist")
                     && actionInLowerCase.matches("(?i)^([a-zA-Z]+|Get)[a-zA-Z]+List[a-zA-Z]+"))
-
-            {
                 getListActions++;
-            }
             else if (actionInLowerCase.matches("(?i)^([a-zA-Z]+|Get)[a-zA-Z]+Form[a-zA-Z]+"))
-            {
                 getFormActions++;
-            }
             else if (actionInLowerCase.matches("(?i)^([a-zA-Z]+|Get)[a-zA-Z]+DtObject[a-zA-Z]+"))
-            {
                 getDtObjectActions++;
-            }
             else if (actionInLowerCase.matches("(?i)[a-zA-Z]+search[a-zA-Z]+"))
-            {
                 searchActions++;
-            }
-
         }
     }
 }
