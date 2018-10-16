@@ -10,12 +10,9 @@ public class TOPDataParser implements IDataParser {
     @Override
     public void ParseLine(DataSet dataSet, String line) {
         //get la
-        Matcher la = Pattern.compile(".*load average:(.*)").matcher(line);
+        Matcher la = laPattern.matcher(line);
         if (la.find())
-        {
             dataSet.cpuData().addLa(Double.parseDouble(la.group(1).split(",")[0].trim()));
-            return;
-        }
 
         //get cpu and mem
         Matcher cpuAndMemMatcher = cpuAndMemPattren.matcher(line);
@@ -25,6 +22,12 @@ public class TOPDataParser implements IDataParser {
             dataSet.cpuData().addMem(Double.valueOf(cpuAndMemMatcher.group(2)));
         }
     }
+
+    private static Pattern laPattern = Pattern
+            .compile(".*load average:(.*)",
+                    Pattern.MULTILINE);
+
     private static Pattern cpuAndMemPattren = Pattern
-            .compile("^ *\\d+ \\S+ +\\S+ +\\S+ +\\S+ +\\S+ +\\S+ +\\S+ \\S+ +(\\S+) +(\\S+) +\\S+ java");
+            .compile("^ *\\d+ \\S+ +\\S+ +\\S+ +\\S+ +\\S+ +\\S+ +\\S+ \\S+ +(\\S+) +(\\S+) +\\S+ java",
+                    Pattern.MULTILINE);
 }
