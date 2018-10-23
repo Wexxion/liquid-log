@@ -48,15 +48,15 @@ public class Database {
                     dones.getPercent99(), dones.getPercent999(), dones.getMax(), erros.getErrorCount()));
         }
 
-//        if (!dones.isNan())
-//            influx.storeActionsFromLog(dbName, currentTime, dones, erros);
-//
-//        GCParser gc = currentDataSet.getGc();
-//        if (!gc.isNan())
-//            influx.storeGc(dbName, currentTime, gc);
-//
-//        TopData cpuData = currentDataSet.cpuData();
-//        if (!cpuData.isNan())
-//            influx.storeTop(dbName, currentTime, cpuData);
+        if (!dones.isNan())
+            influx.storeActionsFromLog(dbName, currentTime, dones, erros);
+
+        GCParser gc = currentDataSet.getGc();
+        if (!gc.isNan())
+            influx.storeGc(dbName, currentTime, gc);
+
+        TopData cpuData = currentDataSet.cpuData();
+        if (!cpuData.isNan())
+            influx.storeTop(dbName, currentTime, cpuData);
     }
 }
