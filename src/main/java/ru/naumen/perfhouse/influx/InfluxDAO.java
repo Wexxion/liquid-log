@@ -55,7 +55,7 @@ import ru.naumen.sd40.log.parser.TopData;
  * Created by doki on 24.10.16.
  */
 @Component
-public class InfluxDAO
+public class InfluxDAO implements IDatabase
 {
     private String influxHost;
 
@@ -114,7 +114,7 @@ public class InfluxDAO
         return BatchPoints.database(dbName).build();
     }
 
-    public void storeActionsFromLog(BatchPoints batch, String dbName, long date, ActionDoneParser dones,
+    public void storeActionsFromLog(String dbName, long date, ActionDoneParser dones,
             ErrorParser errors)
     {
         //@formatter:off
@@ -142,15 +142,7 @@ public class InfluxDAO
         //@formatter:on
 
         Point point = builder.build();
-
-        if (batch != null)
-        {
-            batch.getPoints().add(point);
-        }
-        else
-        {
-            influx.write(dbName, "autogen", point);
-        }
+        influx.write(dbName, "autogen", point);
     }
 
     public void storeFromJSon(BatchPoints batch, String dbName, JSONObject data)
@@ -183,40 +175,22 @@ public class InfluxDAO
         }
     }
 
-    public void storeGc(BatchPoints batch, String dbName, long date, GCParser gc)
+    public void storeGc(String dbName, long date, GCParser gc)
     {
         Point point = Point.measurement(Constants.MEASUREMENT_NAME).time(date, TimeUnit.MILLISECONDS)
                 .addField(GCTIMES, gc.getGcTimes()).addField(AVARAGE_GC_TIME, gc.getCalculatedAvg())
                 .addField(MAX_GC_TIME, gc.getMaxGcTime()).build();
 
-        if (batch != null)
-        {
-            batch.getPoints().add(point);
-        }
-        else
-        {
-            influx.write(dbName, "autogen", point);
-        }
+        influx.write(dbName, "autogen", point);
     }
 
-    public void storeTop(BatchPoints batch, String dbName, long date, TopData data)
+    public void storeTop(String dbName, long date, TopData data)
     {
         Point point = Point.measurement(Constants.MEASUREMENT_NAME).time(date, TimeUnit.MILLISECONDS)
                 .addField(AVG_LA, data.getAvgLa()).addField(AVG_CPU, data.getAvgCpuUsage())
                 .addField(AVG_MEM, data.getAvgMemUsage()).addField(MAX_LA, data.getMaxLa())
                 .addField(MAX_CPU, data.getMaxCpu()).addField(MAX_MEM, data.getMaxMem()).build();
-        if (batch != null)
-        {
-            batch.getPoints().add(point);
-        }
-        else
-        {
-            influx.write(dbName, "autogen", point);
-        }
-    }
 
-    public void writeBatch(BatchPoints batch)
-    {
-        influx.write(batch);
+        influx.write(dbName, "autogen", point);
     }
 }
