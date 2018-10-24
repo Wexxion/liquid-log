@@ -5,7 +5,7 @@ import ru.naumen.sd40.log.parser.ErrorParser;
 import ru.naumen.sd40.log.parser.GCParser;
 import ru.naumen.sd40.log.parser.TopData;
 
-public interface ILogSaver {
+public interface ILogStorage {
     void createDb(String dbName);
 
     void saveActionsFromLog(long date, ActionDoneParser dones, ErrorParser errors);

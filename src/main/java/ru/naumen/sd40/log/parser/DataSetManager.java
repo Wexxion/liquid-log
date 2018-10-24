@@ -1,15 +1,15 @@
 package ru.naumen.sd40.log.parser;
 
-import ru.naumen.perfhouse.influx.ILogSaver;
+import ru.naumen.perfhouse.influx.ILogStorage;
 
 public class DataSetManager {
-    private ILogSaver logSaver;
+    private ILogStorage logSaver;
     private boolean noCsv;
 
     private long currentTime;
     private DataSet currentDataSet;
 
-    public DataSetManager(ILogSaver logSaver, String dbName, boolean noCsv) {
+    public DataSetManager(ILogStorage logSaver, String dbName, boolean noCsv) {
         logSaver.createDb(dbName);
         this.logSaver = logSaver;
         this.noCsv = noCsv;

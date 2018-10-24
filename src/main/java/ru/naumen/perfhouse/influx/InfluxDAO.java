@@ -55,7 +55,7 @@ import ru.naumen.sd40.log.parser.TopData;
  * Created by doki on 24.10.16.
  */
 @Component
-public class InfluxDAO implements ILogSaver
+public class InfluxDAO implements ILogStorage
 {
     private String influxHost;
     private String dbName;

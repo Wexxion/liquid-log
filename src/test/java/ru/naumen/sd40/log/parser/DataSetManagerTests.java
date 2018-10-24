@@ -3,13 +3,13 @@ package ru.naumen.sd40.log.parser;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
-import ru.naumen.perfhouse.influx.ILogSaver;
+import ru.naumen.perfhouse.influx.ILogStorage;
 
 public class DataSetManagerTests {
     @Test
     public void mustReturnOldDataSetWhenOldKey() {
         //given
-        ILogSaver influx = Mockito.mock(ILogSaver.class);
+        ILogStorage influx = Mockito.mock(ILogStorage.class);
         DataSetManager dataSetService = new DataSetManager(influx, null, true);
         long key = 5;
         DataSet expectedDataSet = dataSetService.getDataSet(key);
@@ -21,7 +21,7 @@ public class DataSetManagerTests {
     @Test
     public void mustReturnNewDataSetWhenNewKey() {
         //given
-        ILogSaver influx = Mockito.mock(ILogSaver.class);
+        ILogStorage influx = Mockito.mock(ILogStorage.class);
         DataSetManager dataSetService = new DataSetManager(influx, null, true);
         long key = 5;
         DataSet oldDataSet = dataSetService.getDataSet(key);

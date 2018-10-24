@@ -1,7 +1,7 @@
 package ru.naumen.sd40.log.parser;
 
 import com.sun.javaws.exceptions.InvalidArgumentException;
-import ru.naumen.perfhouse.influx.ILogSaver;
+import ru.naumen.perfhouse.influx.ILogStorage;
 import ru.naumen.perfhouse.influx.InfluxDAO;
 import ru.naumen.sd40.log.parser.Parsers.GC.GCDataParser;
 import ru.naumen.sd40.log.parser.Parsers.GC.GCTimeParser;
@@ -48,7 +48,7 @@ public class App {
 
     private static DataSetManager getDataSetManager(String dbNameArg) {
         String dbName = dbNameArg.replaceAll("-", "_");
-        ILogSaver influx = new InfluxDAO(System.getProperty("influx.host"),
+        ILogStorage influx = new InfluxDAO(System.getProperty("influx.host"),
                 System.getProperty("influx.user"),
                 System.getProperty("influx.password"));
         boolean noCsv = System.getProperty("NoCsv") != null;
