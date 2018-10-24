@@ -1,7 +1,7 @@
 package ru.naumen.sd40.log.parser;
 
 import com.sun.javaws.exceptions.InvalidArgumentException;
-import ru.naumen.perfhouse.influx.IDatabase;
+import ru.naumen.perfhouse.influx.ILogSaver;
 import ru.naumen.perfhouse.influx.InfluxDAO;
 import ru.naumen.sd40.log.parser.Parsers.GC.GCDataParser;
 import ru.naumen.sd40.log.parser.Parsers.GC.GCTimeParser;
@@ -33,7 +33,7 @@ public class App {
             throw new InvalidArgumentException(args);
 
         String logFilename = args[0];
-        Database storage = getDb(args[1]);
+        DataSetManager dataSetManager = getDataSetManager(args[1]);
         String timeZone = args.length > 2 ? args[2] : DefaultTimeZone;
         String parseMode = System.getProperty("parse.mode", "");
 
@@ -43,16 +43,16 @@ public class App {
         timeParser.SetTimeZone(timeZone);
         PartitionReader partitionReader = new PartitionReader(logFilename, timeParser.GetTimePattern());
 
-        new LogParser(partitionReader, timeParser, dataParser, storage).parseAndSave();
+        new LogParser(partitionReader, timeParser, dataParser, dataSetManager).parseAndSave();
     }
 
-    private static Database getDb(String dbNameArg) {
+    private static DataSetManager getDataSetManager(String dbNameArg) {
         String dbName = dbNameArg.replaceAll("-", "_");
-        IDatabase influx = new InfluxDAO(System.getProperty("influx.host"),
+        ILogSaver influx = new InfluxDAO(System.getProperty("influx.host"),
                 System.getProperty("influx.user"),
                 System.getProperty("influx.password"));
         boolean noCsv = System.getProperty("NoCsv") != null;
-        return new Database(influx, dbName, noCsv);
+        return new DataSetManager(influx, dbName, noCsv);
     }
 
     private static IDataParser getDataParser(String parseMode) {

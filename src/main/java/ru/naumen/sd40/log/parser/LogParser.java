@@ -14,14 +14,14 @@ public class LogParser {
     private final PartitionReader reader;
     private final ITimeParser timeParser;
     private final IDataParser dataParser;
-    private final Database db;
+    private final DataSetManager dataSetManager;
 
-    public LogParser(PartitionReader reader, ITimeParser timeParser, IDataParser dataParser, Database db){
+    public LogParser(PartitionReader reader, ITimeParser timeParser, IDataParser dataParser, DataSetManager dataSetManager) {
 
         this.reader = reader;
         this.timeParser = timeParser;
         this.dataParser = dataParser;
-        this.db = db;
+        this.dataSetManager = dataSetManager;
     }
 
     public void parseAndSave() throws ParseException {
@@ -33,7 +33,7 @@ public class LogParser {
                 continue;
 
             long key = (time / FiveMinutes) * FiveMinutes;
-            DataSet dataSet = db.get(key);
+            DataSet dataSet = dataSetManager.getDataSet(key);
             dataParser.ParseLine(dataSet, part);
         }
     }

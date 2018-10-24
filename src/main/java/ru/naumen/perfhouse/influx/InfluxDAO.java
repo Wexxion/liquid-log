@@ -55,9 +55,10 @@ import ru.naumen.sd40.log.parser.TopData;
  * Created by doki on 24.10.16.
  */
 @Component
-public class InfluxDAO implements IDatabase
+public class InfluxDAO implements ILogSaver
 {
     private String influxHost;
+    private String dbName;
 
     private String user;
 
@@ -72,10 +73,12 @@ public class InfluxDAO implements IDatabase
         this.influxHost = influxHost;
         this.user = user;
         this.password = password;
+        init();
     }
 
-    public void connectToDB(String dbName)
+    public void createDb(String dbName)
     {
+        this.dbName = dbName;
         influx.createDatabase(dbName);
     }
 
@@ -114,7 +117,7 @@ public class InfluxDAO implements IDatabase
         return BatchPoints.database(dbName).build();
     }
 
-    public void storeActionsFromLog(String dbName, long date, ActionDoneParser dones,
+    public void saveActionsFromLog(long date, ActionDoneParser dones,
             ErrorParser errors)
     {
         //@formatter:off
@@ -175,7 +178,7 @@ public class InfluxDAO implements IDatabase
         }
     }
 
-    public void storeGc(String dbName, long date, GCParser gc)
+    public void saveGc(long date, GCParser gc)
     {
         Point point = Point.measurement(Constants.MEASUREMENT_NAME).time(date, TimeUnit.MILLISECONDS)
                 .addField(GCTIMES, gc.getGcTimes()).addField(AVARAGE_GC_TIME, gc.getCalculatedAvg())
@@ -184,7 +187,7 @@ public class InfluxDAO implements IDatabase
         influx.write(dbName, "autogen", point);
     }
 
-    public void storeTop(String dbName, long date, TopData data)
+    public void saveTop(long date, TopData data)
     {
         Point point = Point.measurement(Constants.MEASUREMENT_NAME).time(date, TimeUnit.MILLISECONDS)
                 .addField(AVG_LA, data.getAvgLa()).addField(AVG_CPU, data.getAvgCpuUsage())

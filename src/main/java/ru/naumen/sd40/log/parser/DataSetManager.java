@@ -1,38 +1,32 @@
 package ru.naumen.sd40.log.parser;
 
-import org.influxdb.dto.BatchPoints;
-import ru.naumen.perfhouse.influx.IDatabase;
+import ru.naumen.perfhouse.influx.ILogSaver;
 
-import java.util.HashMap;
-
-public class Database {
-    private IDatabase influx;
-    private String dbName;
+public class DataSetManager {
+    private ILogSaver logSaver;
     private boolean noCsv;
 
     private long currentTime;
     private DataSet currentDataSet;
 
-    public Database(IDatabase influx, String dbName, boolean noCsv) {
-        influx.init();
-        influx.connectToDB(dbName);
-        this.influx = influx;
-        this.dbName = dbName;
+    public DataSetManager(ILogSaver logSaver, String dbName, boolean noCsv) {
+        logSaver.createDb(dbName);
+        this.logSaver = logSaver;
         this.noCsv = noCsv;
     }
 
-    DataSet get(long key) {
+    DataSet getDataSet(long key) {
         if (key == currentTime)
             return currentDataSet;
 
-        saveToDb();
+        saveCurrentDataSet();
 
         currentTime = key;
         currentDataSet = new DataSet();
         return currentDataSet;
     }
 
-    private void saveToDb() {
+    private void saveCurrentDataSet() {
         if (currentDataSet == null) {
             if (!noCsv)
                 System.out.print("Timestamp;Actions;Min;Mean;Stddev;50%%;95%%;99%%;99.9%%;Max;Errors\n");
@@ -49,14 +43,14 @@ public class Database {
         }
 
         if (!dones.isNan())
-            influx.storeActionsFromLog(dbName, currentTime, dones, erros);
+            logSaver.saveActionsFromLog(currentTime, dones, erros);
 
         GCParser gc = currentDataSet.getGc();
         if (!gc.isNan())
-            influx.storeGc(dbName, currentTime, gc);
+            logSaver.saveGc(currentTime, gc);
 
         TopData cpuData = currentDataSet.cpuData();
         if (!cpuData.isNan())
-            influx.storeTop(dbName, currentTime, cpuData);
+            logSaver.saveTop(currentTime, cpuData);
     }
 }
