@@ -45,6 +45,9 @@
 	<div class="alert alert-info">
   		<h3><strong>Attention!</strong><br>All requests for stored data are made with UTC time.<br>Requested data will be displayed in your browsers timezone.</h3>
 	</div>
+    <hr>
+    <a href="${pageContext.request.contextPath}/parse">Parse your file here!!!</a>
+    <hr>
 	<br>
     <h1>Client list</h1>
     <table class="table table-striped table-fixed"> <!-- table-bordered  -->
@@ -56,7 +59,7 @@
          <% for(String client:(List<String>)request.getAttribute("clients")) { %>
             <tr>
                 <td class="col-xs-6">
-                    <h4><span><%= client %></span></h2>
+                    <h4><span><%= client %></span></h4>
                 </td>
                 <td class="col-xs-6">
                 	<a class="btn btn-outline-primary" href='<%= ((Map)request.getAttribute("prevMonthLinks")).get(client) %>'>Previous Month</a>
