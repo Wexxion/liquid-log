@@ -16,7 +16,7 @@ import java.nio.file.Path;
 import java.text.ParseException;
 
 public final class LogParserMain {
-    public static void Parse(ILogStorage storage, String dbName, String parseMode,
+    public static void parse(ILogStorage storage, String dbName, String parseMode,
                              Path logFilepath, String timeZone, boolean noCsv) throws IOException, ParseException {
         DataSetManager dataSetManager = new DataSetManager(storage, dbName, noCsv);
         ITimeParser timeParser = getTimeParser(logFilepath.toString(), parseMode);

@@ -24,10 +24,13 @@ import java.util.HashMap;
 public class ParseController {
     private Logger Log = LoggerFactory.getLogger(ParseController.class);
     private InfluxDAO influxDAO;
+    private String downloadDirPath;
 
     @Inject
     public ParseController(InfluxDAO influxDAO) {
         this.influxDAO = influxDAO;
+        downloadDirPath = Paths.get(System.getProperty("user.dir"), "download").toString();
+        new File(downloadDirPath).mkdirs();
     }
 
     @RequestMapping(path = "/parse")
@@ -43,12 +46,11 @@ public class ParseController {
             @RequestParam("timeZone") String timeZone,
             @RequestParam(value = "logTrace", required = false) String logTrace) {
         try {
-            Path filepath = Paths.get(System.getProperty("user.dir"), "download", file.getOriginalFilename());
-            new File(filepath.getParent().toString()).mkdirs();
-            if(!Files.exists(filepath))
+            Path filepath = Paths.get(downloadDirPath, file.getOriginalFilename());
+            if (!Files.exists(filepath))
                 Files.copy(file.getInputStream(), filepath);
 
-            LogParserMain.Parse(influxDAO, dbName, parseMode, filepath, timeZone, logTrace == null);
+            LogParserMain.parse(influxDAO, dbName, parseMode, filepath, timeZone, logTrace == null);
         } catch (Exception ex) {
             Log.error(ex.toString(), ex);
         }
