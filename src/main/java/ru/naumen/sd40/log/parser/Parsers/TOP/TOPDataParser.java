@@ -1,26 +1,33 @@
 package ru.naumen.sd40.log.parser.Parsers.TOP;
 
-import ru.naumen.sd40.log.parser.DataSet;
+import org.springframework.stereotype.Component;
 import ru.naumen.sd40.log.parser.Parsers.IDataParser;
+import ru.naumen.sd40.log.parser.Parsers.ParserSettings;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class TOPDataParser implements IDataParser {
+@Component
+public class TOPDataParser implements IDataParser<TopDataSet> {
     @Override
-    public void ParseLine(DataSet dataSet, String line) {
+    public void parseLine(TopDataSet dataSet, String line) {
         //get la
         Matcher la = laPattern.matcher(line);
         if (la.find())
-            dataSet.cpuData().addLa(Double.parseDouble(la.group(1).split(",")[0].trim()));
+            dataSet.addLa(Double.parseDouble(la.group(1).split(",")[0].trim()));
 
         //get cpu and mem
         Matcher cpuAndMemMatcher = cpuAndMemPattren.matcher(line);
         if (cpuAndMemMatcher.find())
         {
-            dataSet.cpuData().addCpu(Double.valueOf(cpuAndMemMatcher.group(1)));
-            dataSet.cpuData().addMem(Double.valueOf(cpuAndMemMatcher.group(2)));
+            dataSet.addCpu(Double.valueOf(cpuAndMemMatcher.group(1)));
+            dataSet.addMem(Double.valueOf(cpuAndMemMatcher.group(2)));
         }
+    }
+
+    @Override
+    public void configureViaSettings(ParserSettings settings) {
+
     }
 
     private static Pattern laPattern = Pattern

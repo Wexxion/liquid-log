@@ -1,6 +1,8 @@
 package ru.naumen.sd40.log.parser.Parsers.SDNG;
 
+import org.springframework.stereotype.Component;
 import ru.naumen.sd40.log.parser.Parsers.ITimeParser;
+import ru.naumen.sd40.log.parser.Parsers.ParserSettings;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,11 +11,15 @@ import java.util.Locale;
 import java.util.TimeZone;
 import java.util.regex.Pattern;
 
+@Component
 public class SDNGTimeParser implements ITimeParser {
     @Override
     public Date GetDate(String timeString) throws ParseException {
         return DATE_FORMAT.parse(timeString);
     }
+
+    @Override
+    public void configureViaSettings(ParserSettings settings) { }
 
     @Override
     public Pattern GetTimePattern() {

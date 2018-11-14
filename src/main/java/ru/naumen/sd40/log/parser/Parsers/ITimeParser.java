@@ -8,4 +8,5 @@ public interface ITimeParser {
     Date GetDate(String timeString) throws ParseException;
     Pattern GetTimePattern();
     void SetTimeZone(String timeZone);
+    void configureViaSettings(ParserSettings settings);
 }

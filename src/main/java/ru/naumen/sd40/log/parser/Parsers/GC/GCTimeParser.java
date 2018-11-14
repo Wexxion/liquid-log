@@ -1,6 +1,8 @@
 package ru.naumen.sd40.log.parser.Parsers.GC;
 
+import org.springframework.stereotype.Component;
 import ru.naumen.sd40.log.parser.Parsers.ITimeParser;
+import ru.naumen.sd40.log.parser.Parsers.ParserSettings;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,6 +11,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 import java.util.regex.Pattern;
 
+@Component
 public class GCTimeParser implements ITimeParser {
     @Override
     public Date GetDate(String timeString) throws ParseException {
@@ -24,6 +27,9 @@ public class GCTimeParser implements ITimeParser {
     public void SetTimeZone(String timeZone) {
         DATE_FORMAT.setTimeZone(TimeZone.getTimeZone(timeZone));
     }
+
+    @Override
+    public void configureViaSettings(ParserSettings settings) { }
 
     private static final SimpleDateFormat DATE_FORMAT =
             new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ",

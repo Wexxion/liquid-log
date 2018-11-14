@@ -2,127 +2,140 @@ package ru.naumen.sd40.log.parser;
 
 import org.junit.Assert;
 import org.junit.Test;
+import ru.naumen.sd40.log.parser.Parsers.IDataParser;
+import ru.naumen.sd40.log.parser.Parsers.SDNG.SDNGDataParser;
+import ru.naumen.sd40.log.parser.Parsers.SDNG.SDNGDataSet;
+import ru.naumen.sd40.log.parser.Parsers.SDNG.SDNGLogParser;
+import ru.naumen.sd40.log.parser.Parsers.SDNG.SDNGTimeParser;
 
 public class ActionDoneParserTest {
 
     @Test
     public void mustParseAddAction() {
         //given
-        ActionDoneParser parser = new ActionDoneParser();
+        SDNGDataSet dataSet = new SDNGDataSet();
+        IDataParser parser = new SDNGDataParser();
 
         //when
-        parser.parseLine("Done(10): AddObjectAction");
+        parser.parseLine(dataSet,"Done(10): AddObjectAction");
 
         //then
-        Assert.assertEquals(1, parser.getAddObjectActions());
+        Assert.assertEquals(1, dataSet.getActionCounters(SDNGDataSet.ActionType.AddObjectAction).intValue());
     }
 
     @Test
     public void mustParseFormActions() {
         //given
-        ActionDoneParser parser = new ActionDoneParser();
+        SDNGDataSet dataSet = new SDNGDataSet();
+        IDataParser parser = new SDNGDataParser();
 
         //when
-        parser.parseLine("Done(10): GetFormAction");
-        parser.parseLine("Done(1): GetAddFormContextDataAction");
+        parser.parseLine(dataSet,"Done(10): GetFormAction");
+        parser.parseLine(dataSet,"Done(1): GetAddFormContextDataAction");
 
         //then
-        Assert.assertEquals(2, parser.getFormActions());
+        Assert.assertEquals(2, dataSet.getActionCounters(SDNGDataSet.ActionType.GetFormAction).intValue());
     }
 
     @Test
     public void mustParseEditObject() {
         //given
-        ActionDoneParser parser=  new ActionDoneParser();
+        SDNGDataSet dataSet = new SDNGDataSet();
+        IDataParser parser = new SDNGDataParser();
 
         //when
-        parser.parseLine("Done(10): EditObjectAction");
+        parser.parseLine(dataSet,"Done(10): EditObjectAction");
 
         //then
-        Assert.assertEquals(1, parser.getEditObjectsActions());
+        Assert.assertEquals(1, dataSet.getActionCounters(SDNGDataSet.ActionType.EditObjectsAction).intValue());
     }
 
     @Test
     public void mustParseSearchObject(){
         //given
-        ActionDoneParser parser = new ActionDoneParser();
+        SDNGDataSet dataSet = new SDNGDataSet();
+        IDataParser parser = new SDNGDataParser();
 
         //when
-        parser.parseLine("Done(10): GetPossibleAgreementsChildsSearchAction");
-        parser.parseLine("Done(10): TreeSearchAction");
-        parser.parseLine("Done(10): GetSearchResultAction");
-        parser.parseLine("Done(10): GetSimpleSearchResultsAction");
-        parser.parseLine("Done(10): SimpleSearchAction");
-        parser.parseLine("Done(10): ExtendedSearchByStringAction");
-        parser.parseLine("Done(10): ExtendedSearchByFilterAction");
+        parser.parseLine(dataSet,"Done(10): GetPossibleAgreementsChildsSearchAction");
+        parser.parseLine(dataSet,"Done(10): TreeSearchAction");
+        parser.parseLine(dataSet,"Done(10): GetSearchResultAction");
+        parser.parseLine(dataSet,"Done(10): GetSimpleSearchResultsAction");
+        parser.parseLine(dataSet,"Done(10): SimpleSearchAction");
+        parser.parseLine(dataSet,"Done(10): ExtendedSearchByStringAction");
+        parser.parseLine(dataSet,"Done(10): ExtendedSearchByFilterAction");
 
         //then
-        Assert.assertEquals(7, parser.getSearchActions());
+        Assert.assertEquals(7, dataSet.getActionCounters(SDNGDataSet.ActionType.SearchAction).intValue());
     }
 
     @Test
     public void mustParseGetList(){
-        //given:
-        ActionDoneParser parser=  new ActionDoneParser();
+        //given
+        SDNGDataSet dataSet = new SDNGDataSet();
+        IDataParser parser = new SDNGDataParser();
 
-        //when:
-        parser.parseLine("Done(10): GetDtObjectListAction");
-        parser.parseLine("Done(10): GetPossibleCaseListValueAction");
-        parser.parseLine("Done(10): GetPossibleAgreementsTreeListActions");
-        parser.parseLine("Done(10): GetCountForObjectListAction");
-        parser.parseLine("Done(10): GetDataForObjectListAction");
-        parser.parseLine("Done(10): GetPossibleAgreementsListActions");
-        parser.parseLine("Done(10): GetDtObjectForRelObjListAction");
+        //when
+        parser.parseLine(dataSet, "Done(10): GetDtObjectListAction");
+        parser.parseLine(dataSet, "Done(10): GetPossibleCaseListValueAction");
+        parser.parseLine(dataSet, "Done(10): GetPossibleAgreementsTreeListActions");
+        parser.parseLine(dataSet, "Done(10): GetCountForObjectListAction");
+        parser.parseLine(dataSet, "Done(10): GetDataForObjectListAction");
+        parser.parseLine(dataSet, "Done(10): GetPossibleAgreementsListActions");
+        parser.parseLine(dataSet, "Done(10): GetDtObjectForRelObjListAction");
 
-        //then:
-        Assert.assertEquals(7, parser.geListActions());
+        //then
+        Assert.assertEquals(7, dataSet.getActionCounters(SDNGDataSet.ActionType.GetListAction).intValue());
     }
 
     @Test
     public void mustParseComment(){
-        //given:
-        ActionDoneParser parser=  new ActionDoneParser();
+        //given
+        SDNGDataSet dataSet = new SDNGDataSet();
+        IDataParser parser = new SDNGDataParser();
 
-        //when:
-        parser.parseLine("Done(10): EditCommentAction");
-        parser.parseLine("Done(10): ChangeResponsibleWithAddCommentAction");
-        parser.parseLine("Done(10): ShowMoreCommentAttrsAction");
-        parser.parseLine("Done(10): CheckObjectsExceedsCommentsAmountAction");
-        parser.parseLine("Done(10): GetAddCommentPermissionAction");
-        parser.parseLine("Done(10): GetCommentDtObjectTemplateAction");
+        //when
+        parser.parseLine(dataSet, "Done(10): EditCommentAction");
+        parser.parseLine(dataSet, "Done(10): ChangeResponsibleWithAddCommentAction");
+        parser.parseLine(dataSet, "Done(10): ShowMoreCommentAttrsAction");
+        parser.parseLine(dataSet, "Done(10): CheckObjectsExceedsCommentsAmountAction");
+        parser.parseLine(dataSet, "Done(10): GetAddCommentPermissionAction");
+        parser.parseLine(dataSet, "Done(10): GetCommentDtObjectTemplateAction");
 
-        //then:
-        Assert.assertEquals(6, parser.getCommentActions());
+        //then
+        Assert.assertEquals(6, dataSet.getActionCounters(SDNGDataSet.ActionType.CommentAction).intValue());
     }
 
     @Test
     public void mustParseDtObject(){
-        //given:
-        ActionDoneParser parser=  new ActionDoneParser();
+        //given
+        SDNGDataSet dataSet = new SDNGDataSet();
+        IDataParser parser = new SDNGDataParser();
 
-        //when:
-        parser.parseLine("Done(10): GetVisibleDtObjectAction");
-        parser.parseLine("Done(10): GetDtObjectsAction");
-        parser.parseLine("Done(10): GetDtObjectTreeSelectionStateAction");
-        parser.parseLine("Done(10): AbstractGetDtObjectTemplateAction");
-        parser.parseLine("Done(10): GetDtObjectTemplateAction");
+        //when
+        parser.parseLine(dataSet, "Done(10): GetVisibleDtObjectAction");
+        parser.parseLine(dataSet, "Done(10): GetDtObjectsAction");
+        parser.parseLine(dataSet, "Done(10): GetDtObjectTreeSelectionStateAction");
+        parser.parseLine(dataSet, "Done(10): AbstractGetDtObjectTemplateAction");
+        parser.parseLine(dataSet, "Done(10): GetDtObjectTemplateAction");
 
-        //then:
-        Assert.assertEquals(5, parser.getDtObjectActions());
+        //then
+        Assert.assertEquals(5, dataSet.getActionCounters(SDNGDataSet.ActionType.GetDtObjectAction).intValue());
     }
 
     @Test
     public void mustParseCatalogs(){
-        //given:
-        ActionDoneParser parser = new ActionDoneParser();
+        //given
+        SDNGDataSet dataSet = new SDNGDataSet();
+        IDataParser parser = new SDNGDataParser();
 
-        //when:
-        parser.parseLine("Done(113):GetCatalogsAction");
-        parser.parseLine("SQL(0) Done(113):GetCatalogsAction");
-        parser.parseLine("SQL(0) Done(41):GetCatalogsAction [getCodes()=null, ]");
-        parser.parseLine("Done(777):GetCatalogAction");
+        //when
+        parser.parseLine(dataSet, "Done(113):GetCatalogsAction");
+        parser.parseLine(dataSet, "SQL(0) Done(113):GetCatalogsAction");
+        parser.parseLine(dataSet, "SQL(0) Done(41):GetCatalogsAction [getCodes()=null, ]");
+        parser.parseLine(dataSet, "Done(777):GetCatalogAction");
 
-        //then:
-        Assert.assertEquals(3, parser.getCatalogsAction());
+        //then
+        Assert.assertEquals(3, dataSet.getActionCounters(SDNGDataSet.ActionType.GetCatalogsAction).intValue());
     }
 }

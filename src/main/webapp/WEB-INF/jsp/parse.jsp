@@ -51,7 +51,7 @@
         var size = file.files[0].size / 1024 / 1024;
         var elem = document.getElementById("myBar");
         var width = 1;
-        var id = setInterval(frame, size * 11);
+        var id = setInterval(frame, size * 10);
         function frame() {
             if (width >= 100) {
                 clearInterval(id);

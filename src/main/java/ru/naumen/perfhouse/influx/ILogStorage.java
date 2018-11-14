@@ -1,15 +1,8 @@
 package ru.naumen.perfhouse.influx;
 
-import ru.naumen.sd40.log.parser.ActionDoneParser;
-import ru.naumen.sd40.log.parser.ErrorParser;
-import ru.naumen.sd40.log.parser.GCParser;
-import ru.naumen.sd40.log.parser.TopData;
+import ru.naumen.sd40.log.parser.Parsers.IDataSet;
 
 public interface ILogStorage {
-    void createDb(String dbName);
-
-    void saveActionsFromLog(long date, ActionDoneParser dones, ErrorParser errors);
-    void saveGc(long date, GCParser gc);
-    void saveTop(long date, TopData data);
-
+    void createDb(String dbName, boolean printTrace);
+    void saveDataSet(long date, IDataSet dataSet);
 }

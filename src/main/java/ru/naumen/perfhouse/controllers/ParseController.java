@@ -11,7 +11,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.naumen.perfhouse.influx.InfluxDAO;
-import ru.naumen.sd40.log.parser.LogParserMain;
+import ru.naumen.sd40.log.parser.LogParser;
+import ru.naumen.sd40.log.parser.LogParserBuilder;
 
 import javax.inject.Inject;
 import java.io.File;
@@ -23,12 +24,12 @@ import java.util.HashMap;
 @Controller
 public class ParseController {
     private Logger Log = LoggerFactory.getLogger(ParseController.class);
-    private InfluxDAO influxDAO;
-    private String downloadDirPath;
+    private final String downloadDirPath;
+    private final LogParserBuilder parserBulder;
 
     @Inject
-    public ParseController(InfluxDAO influxDAO) {
-        this.influxDAO = influxDAO;
+    public ParseController(LogParserBuilder logParserBuilder) {
+        parserBulder = logParserBuilder;
         downloadDirPath = Paths.get(System.getProperty("user.dir"), "download").toString();
         new File(downloadDirPath).mkdirs();
     }
@@ -50,7 +51,16 @@ public class ParseController {
             if (!Files.exists(filepath))
                 Files.copy(file.getInputStream(), filepath);
 
-            LogParserMain.parse(influxDAO, dbName, parseMode, filepath, timeZone, logTrace == null);
+            LogParser logParser = parserBulder
+                    .dbName(dbName)
+                    .printTrace(logTrace != null)
+                    .logFilepath(filepath)
+                    .parseMode(parseMode)
+                    .timeZone(timeZone)
+                    .build();
+
+            logParser.parseAndSave();
+
         } catch (Exception ex) {
             Log.error(ex.toString(), ex);
         }
