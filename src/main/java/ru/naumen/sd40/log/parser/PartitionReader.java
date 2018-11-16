@@ -17,7 +17,7 @@ class PartitionReader {
         LogIterator = Files.lines(logFilepath).iterator();
     }
 
-    String GetNextPart() {
+    String getNextPart() {
         StringBuilder sb = new StringBuilder();
         String line;
 

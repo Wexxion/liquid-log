@@ -4,18 +4,13 @@ import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import ru.naumen.sd40.log.parser.Parsers.IDataSet;
 
 public class TopDataSet implements IDataSet {
-    private DescriptiveStatistics laStat = new DescriptiveStatistics();
-    private DescriptiveStatistics cpuStat = new DescriptiveStatistics();
-    private DescriptiveStatistics memStat = new DescriptiveStatistics();
+    private final DescriptiveStatistics laStat = new DescriptiveStatistics();
+    private final DescriptiveStatistics cpuStat = new DescriptiveStatistics();
+    private final DescriptiveStatistics memStat = new DescriptiveStatistics();
 
     @Override
     public boolean isNan() {
         return laStat.getN() == 0 && cpuStat.getN() == 0 && memStat.getN() == 0;
-    }
-
-    @Override
-    public IDataSet create() {
-        return new TopDataSet();
     }
 
     public void addLa(double la) {

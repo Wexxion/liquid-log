@@ -1,5 +1,6 @@
 package ru.naumen.sd40.log.parser.Parsers.TOP;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import ru.naumen.sd40.log.parser.Parsers.ITimeParser;
 import ru.naumen.sd40.log.parser.Parsers.ParserSettings;
@@ -12,11 +13,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Component
+@Scope("prototype")
 public class TOPTimeParser implements ITimeParser {
-    @Override
-    public Date GetDate(String timeString) throws ParseException {
-        return DATE_FORMAT.parse(dataDate + timeString);
-    }
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyyMMddHH:mm");
+    private static final Pattern TIME_PATTERN = Pattern.compile("^_+ (\\S+)");
+
+    private String dataDate;
 
     @Override
     public void configureViaSettings(ParserSettings settings) {
@@ -27,17 +29,17 @@ public class TOPTimeParser implements ITimeParser {
     }
 
     @Override
-    public Pattern GetTimePattern() {
+    public Date getDate(String timeString) throws ParseException {
+        return DATE_FORMAT.parse(dataDate + timeString);
+    }
+
+    @Override
+    public Pattern getTimePattern() {
         return TIME_PATTERN;
     }
 
     @Override
-    public void SetTimeZone(String timeZone) {
+    public void setTimeZone(String timeZone) {
         DATE_FORMAT.setTimeZone(TimeZone.getTimeZone("GMT"));
     }
-
-    private SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyyMMddHH:mm");
-    private Pattern TIME_PATTERN = Pattern.compile("^_+ (\\S+)");
-
-    private String dataDate;
 }

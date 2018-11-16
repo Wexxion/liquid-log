@@ -1,7 +1,7 @@
 package ru.naumen.sd40.log.parser.Parsers;
 
 public interface IDataSetCreator {
-    IDataSet Create();
+    IDataSet create();
     String getModeName();
 }
 

@@ -9,8 +9,8 @@ import javax.inject.Inject;
 
 @Component
 public class GCLogParser implements ILogParser {
-    private GCTimeParser timeParser;
-    private GCDataParser dataParser;
+    private final GCTimeParser timeParser;
+    private final GCDataParser dataParser;
 
     @Inject
     public GCLogParser(GCTimeParser timeParser, GCDataParser dataParser) {

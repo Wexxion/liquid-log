@@ -13,8 +13,15 @@ import java.util.regex.Pattern;
 
 @Component
 public class SDNGTimeParser implements ITimeParser {
+    private static final SimpleDateFormat DATE_FORMAT =
+            new SimpleDateFormat("dd MMM yyyy HH:mm:ss,SSS",
+                    new Locale("ru", "RU"));
+
+    private static final Pattern TIME_PATTERN =
+            Pattern.compile("^\\d+ \\[.*?\\] \\((\\d{2} .{3} \\d{4} \\d{2}:\\d{2}:\\d{2},\\d{3})\\)");
+
     @Override
-    public Date GetDate(String timeString) throws ParseException {
+    public Date getDate(String timeString) throws ParseException {
         return DATE_FORMAT.parse(timeString);
     }
 
@@ -22,19 +29,12 @@ public class SDNGTimeParser implements ITimeParser {
     public void configureViaSettings(ParserSettings settings) { }
 
     @Override
-    public Pattern GetTimePattern() {
+    public Pattern getTimePattern() {
         return TIME_PATTERN;
     }
 
     @Override
-    public void SetTimeZone(String timeZone) {
+    public void setTimeZone(String timeZone) {
         DATE_FORMAT.setTimeZone(TimeZone.getTimeZone(timeZone));
     }
-
-    private static final SimpleDateFormat DATE_FORMAT =
-            new SimpleDateFormat("dd MMM yyyy HH:mm:ss,SSS",
-                    new Locale("ru", "RU"));
-
-    private static final Pattern TIME_PATTERN =
-            Pattern.compile("^\\d+ \\[.*?\\] \\((\\d{2} .{3} \\d{4} \\d{2}:\\d{2}:\\d{2},\\d{3})\\)");
 }

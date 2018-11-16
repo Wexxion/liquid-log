@@ -9,8 +9,8 @@ import javax.inject.Inject;
 
 @Component
 public class SDNGLogParser implements ILogParser {
-    private SDNGTimeParser timeParser;
-    private SDNGDataParser dataParser;
+    private final SDNGTimeParser timeParser;
+    private final SDNGDataParser dataParser;
 
     @Inject
     public SDNGLogParser(SDNGTimeParser timeParser, SDNGDataParser dataParser) {

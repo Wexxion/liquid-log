@@ -9,6 +9,14 @@ import java.util.regex.Pattern;
 
 @Component
 public class TOPDataParser implements IDataParser<TopDataSet> {
+    private static final Pattern laPattern = Pattern
+            .compile(".*load average:(.*)",
+                    Pattern.MULTILINE);
+
+    private static final Pattern cpuAndMemPattren = Pattern
+            .compile("^ *\\d+ \\S+ +\\S+ +\\S+ +\\S+ +\\S+ +\\S+ +\\S+ \\S+ +(\\S+) +(\\S+) +\\S+ java",
+                    Pattern.MULTILINE);
+
     @Override
     public void parseLine(TopDataSet dataSet, String line) {
         //get la
@@ -26,15 +34,5 @@ public class TOPDataParser implements IDataParser<TopDataSet> {
     }
 
     @Override
-    public void configureViaSettings(ParserSettings settings) {
-
-    }
-
-    private static Pattern laPattern = Pattern
-            .compile(".*load average:(.*)",
-                    Pattern.MULTILINE);
-
-    private static Pattern cpuAndMemPattren = Pattern
-            .compile("^ *\\d+ \\S+ +\\S+ +\\S+ +\\S+ +\\S+ +\\S+ +\\S+ \\S+ +(\\S+) +(\\S+) +\\S+ java",
-                    Pattern.MULTILINE);
+    public void configureViaSettings(ParserSettings settings) { }
 }

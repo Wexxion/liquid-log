@@ -7,7 +7,7 @@ import ru.naumen.sd40.log.parser.Parsers.IDataSetCreator;
 @Component
 class TOPDataSetCreator implements IDataSetCreator {
     @Override
-    public IDataSet Create() {
+    public IDataSet create() {
         return new TopDataSet();
     }
 

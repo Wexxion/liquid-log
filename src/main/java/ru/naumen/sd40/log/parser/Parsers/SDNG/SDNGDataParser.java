@@ -13,12 +13,11 @@ import java.util.stream.Stream;
 
 @Component
 public class SDNGDataParser implements IDataParser<SDNGDataSet> {
-    private Pattern warnRegEx = Pattern.compile("^\\d+ \\[.+?\\] \\(.+?\\) WARN");
-    private Pattern errorRegEx = Pattern.compile("^\\d+ \\[.+?\\] \\(.+?\\) ERROR");
-    private Pattern fatalRegEx = Pattern.compile("^\\d+ \\[.+?\\] \\(.+?\\) FATAL");
-
-    private Pattern doneRegEx = Pattern.compile("Done\\((\\d+)\\): ?(.*?Action)");
-    private static Set<String> EXCLUDED_ACTIONS =
+    private static final Pattern warnRegEx = Pattern.compile("^\\d+ \\[.+?\\] \\(.+?\\) WARN");
+    private static final Pattern errorRegEx = Pattern.compile("^\\d+ \\[.+?\\] \\(.+?\\) ERROR");
+    private static final Pattern fatalRegEx = Pattern.compile("^\\d+ \\[.+?\\] \\(.+?\\) FATAL");
+    private static final Pattern doneRegEx = Pattern.compile("Done\\((\\d+)\\): ?(.*?Action)");
+    private static final Set<String> EXCLUDED_ACTIONS =
             new HashSet<>(Stream.of(
                     SDNGDataSet.ActionType.EventAction
             ).map(Enum::name).collect(Collectors.toList()));
@@ -38,11 +37,11 @@ public class SDNGDataParser implements IDataParser<SDNGDataSet> {
 
     private void parseErrors(SDNGDataSet dataSet, String line) {
         if (warnRegEx.matcher(line).find())
-            dataSet.incremetErrorCounter(SDNGDataSet.ErrorType.Warn);
+            dataSet.incrementErrorCounter(SDNGDataSet.ErrorType.Warn);
         if (errorRegEx.matcher(line).find())
-            dataSet.incremetErrorCounter(SDNGDataSet.ErrorType.Error);
+            dataSet.incrementErrorCounter(SDNGDataSet.ErrorType.Error);
         if (fatalRegEx.matcher(line).find())
-            dataSet.incremetErrorCounter(SDNGDataSet.ErrorType.Fatal);
+            dataSet.incrementErrorCounter(SDNGDataSet.ErrorType.Fatal);
     }
 
     private void parseActions(SDNGDataSet dataSet, String line) {
@@ -57,22 +56,22 @@ public class SDNGDataParser implements IDataParser<SDNGDataSet> {
             dataSet.addTimes(Integer.parseInt(matcher.group(1)));
 
             if (actionInLowerCase.equals("addobjectaction"))
-                dataSet.incremetActionCounter(SDNGDataSet.ActionType.AddObjectAction);
+                dataSet.incrementActionCounter(SDNGDataSet.ActionType.AddObjectAction);
             else if (actionInLowerCase.equals("editobjectaction"))
-                dataSet.incremetActionCounter(SDNGDataSet.ActionType.EditObjectsAction);
+                dataSet.incrementActionCounter(SDNGDataSet.ActionType.EditObjectsAction);
             else if (actionInLowerCase.equals("getcatalogsaction"))
-                dataSet.incremetActionCounter(SDNGDataSet.ActionType.GetCatalogsAction);
+                dataSet.incrementActionCounter(SDNGDataSet.ActionType.GetCatalogsAction);
             else if (actionInLowerCase.matches("(?i)[a-zA-Z]+comment[a-zA-Z]+"))
-                dataSet.incremetActionCounter(SDNGDataSet.ActionType.CommentAction);
+                dataSet.incrementActionCounter(SDNGDataSet.ActionType.CommentAction);
             else if (!actionInLowerCase.contains("advlist")
                     && actionInLowerCase.matches("(?i)^([a-zA-Z]+|Get)[a-zA-Z]+List[a-zA-Z]+"))
-                dataSet.incremetActionCounter(SDNGDataSet.ActionType.GetListAction);
+                dataSet.incrementActionCounter(SDNGDataSet.ActionType.GetListAction);
             else if (actionInLowerCase.matches("(?i)^([a-zA-Z]+|Get)[a-zA-Z]+Form[a-zA-Z]+"))
-                dataSet.incremetActionCounter(SDNGDataSet.ActionType.GetFormAction);
+                dataSet.incrementActionCounter(SDNGDataSet.ActionType.GetFormAction);
             else if (actionInLowerCase.matches("(?i)^([a-zA-Z]+|Get)[a-zA-Z]+DtObject[a-zA-Z]+"))
-                dataSet.incremetActionCounter(SDNGDataSet.ActionType.GetDtObjectAction);
+                dataSet.incrementActionCounter(SDNGDataSet.ActionType.GetDtObjectAction);
             else if (actionInLowerCase.matches("(?i)[a-zA-Z]+search[a-zA-Z]+"))
-                dataSet.incremetActionCounter(SDNGDataSet.ActionType.SearchAction);
+                dataSet.incrementActionCounter(SDNGDataSet.ActionType.SearchAction);
         }
     }
 }

@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import ru.naumen.perfhouse.influx.InfluxDAO;
 import ru.naumen.sd40.log.parser.LogParser;
 import ru.naumen.sd40.log.parser.LogParserBuilder;
 
@@ -23,7 +22,7 @@ import java.util.HashMap;
 
 @Controller
 public class ParseController {
-    private Logger Log = LoggerFactory.getLogger(ParseController.class);
+    private final Logger Log = LoggerFactory.getLogger(ParseController.class);
     private final String downloadDirPath;
     private final LogParserBuilder parserBulder;
 

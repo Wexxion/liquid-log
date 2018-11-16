@@ -9,8 +9,8 @@ import javax.inject.Inject;
 
 @Component
 public class TOPLogParser implements ILogParser {
-    private TOPTimeParser timeParser;
-    private TOPDataParser dataParser;
+    private final TOPTimeParser timeParser;
+    private final TOPDataParser dataParser;
 
     @Inject
     public TOPLogParser(TOPTimeParser timeParser, TOPDataParser dataParser) {

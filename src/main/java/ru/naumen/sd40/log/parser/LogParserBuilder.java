@@ -1,5 +1,6 @@
 package ru.naumen.sd40.log.parser;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import ru.naumen.perfhouse.influx.ILogStorage;
 import ru.naumen.perfhouse.influx.InfluxDAO;
@@ -14,10 +15,12 @@ import java.util.HashMap;
 import java.util.List;
 
 @Component
+@Scope("prototype")
 public class LogParserBuilder {
-    private HashMap<String, ILogParser> parsers = new HashMap<>();
-    private HashMap<String, IDataSetCreator> dataSetCreators = new HashMap<>();
-    private ILogStorage logStorage = null;
+    private final ILogStorage logStorage;
+    private final HashMap<String, ILogParser> parsers = new HashMap<>();
+    private final HashMap<String, IDataSetCreator> dataSetCreators = new HashMap<>();
+
     private String dbName = null;
     private String parseMode = null;
     private Path logFilepath = null;
@@ -48,8 +51,8 @@ public class LogParserBuilder {
                             String.join(", ", parsers.keySet())));
 
         DataSetManager dataSetManager = new DataSetManager(logStorage, dataSetCreator, dbName, printTrace);
-        logParser.getTimeParser().SetTimeZone(timeZone);
-        PartitionReader partitionReader = new PartitionReader(logFilepath, logParser.getTimeParser().GetTimePattern());
+        logParser.getTimeParser().setTimeZone(timeZone);
+        PartitionReader partitionReader = new PartitionReader(logFilepath, logParser.getTimeParser().getTimePattern());
         return new LogParser(partitionReader, logParser, dataSetManager, settings);
     }
 

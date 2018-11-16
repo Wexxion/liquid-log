@@ -5,8 +5,8 @@ import ru.naumen.sd40.log.parser.Parsers.IDataSet;
 import ru.naumen.sd40.log.parser.Parsers.IDataSetCreator;
 
 class DataSetManager {
-    private ILogStorage logSaver;
-    private IDataSetCreator dataSetCreator;
+    private final ILogStorage logSaver;
+    private final IDataSetCreator dataSetCreator;
 
     private long currentTime;
     private IDataSet currentDataSet;
@@ -25,7 +25,7 @@ class DataSetManager {
         logSaver.saveDataSet(currentTime, currentDataSet);
 
         currentTime = key;
-        currentDataSet = dataSetCreator.Create();
+        currentDataSet = dataSetCreator.create();
         return currentDataSet;
     }
 }

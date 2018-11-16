@@ -16,6 +16,10 @@ public class SDNGDataSet implements IDataSet {
         Warn, Error, Fatal
     }
 
+    private final DescriptiveStatistics stat = new DescriptiveStatistics();
+    private final HashMap<ActionType, Integer> actionCounters = new HashMap<>();
+    private final HashMap<ErrorType, Integer> errorCounters = new HashMap<>();
+
     public SDNGDataSet() {
         for(ActionType actionType : ActionType.values()){
             actionCounters.put(actionType, 0);
@@ -26,18 +30,9 @@ public class SDNGDataSet implements IDataSet {
         }
     }
 
-    private DescriptiveStatistics stat = new DescriptiveStatistics();
-    private HashMap<ActionType, Integer> actionCounters = new HashMap<>();
-    private HashMap<ErrorType, Integer> errorCounters = new HashMap<>();
-
     @Override
     public boolean isNan() {
         return stat.getN() == 0;
-    }
-
-    @Override
-    public IDataSet create() {
-        return new SDNGDataSet();
     }
 
     public DescriptiveStatistics getFinalStat() {
@@ -52,7 +47,7 @@ public class SDNGDataSet implements IDataSet {
         return actionCounters.get(actionType);
     }
 
-    public void incremetActionCounter(ActionType actionType) {
+    public void incrementActionCounter(ActionType actionType) {
         actionCounters.put(actionType, actionCounters.get(actionType) + 1);
     }
 
@@ -60,7 +55,7 @@ public class SDNGDataSet implements IDataSet {
         return errorCounters.get(errorType);
     }
 
-    public void incremetErrorCounter(ErrorType errorType) {
+    public void incrementErrorCounter(ErrorType errorType) {
         errorCounters.put(errorType, errorCounters.get(errorType) + 1);
     }
 }

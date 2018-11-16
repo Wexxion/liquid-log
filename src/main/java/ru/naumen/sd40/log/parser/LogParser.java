@@ -28,7 +28,7 @@ public class LogParser {
         String part;
         long time;
 
-        while ((part = reader.GetNextPart()) != null) {
+        while ((part = reader.getNextPart()) != null) {
             if ((time = parseTime(part)) == 0)
                 continue;
 
@@ -39,11 +39,11 @@ public class LogParser {
     }
 
     private long parseTime(String line) throws ParseException {
-        Matcher matcher = timeParser.GetTimePattern().matcher(line);
+        Matcher matcher = timeParser.getTimePattern().matcher(line);
 
         if (matcher.find()) {
             String timeString = matcher.group(1);
-            Date recDate = timeParser.GetDate(timeString);
+            Date recDate = timeParser.getDate(timeString);
             return recDate.getTime();
         }
         return 0L;
