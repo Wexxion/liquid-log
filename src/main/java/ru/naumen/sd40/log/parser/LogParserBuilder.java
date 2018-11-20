@@ -1,6 +1,5 @@
 package ru.naumen.sd40.log.parser;
 
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import ru.naumen.perfhouse.influx.ILogStorage;
 import ru.naumen.perfhouse.influx.InfluxDAO;
@@ -10,22 +9,14 @@ import ru.naumen.sd40.log.parser.Parsers.ParserSettings;
 
 import javax.inject.Inject;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
 
 @Component
-@Scope("prototype")
 public class LogParserBuilder {
     private final ILogStorage logStorage;
     private final HashMap<String, ILogParser> parsers = new HashMap<>();
     private final HashMap<String, IDataSetCreator> dataSetCreators = new HashMap<>();
-
-    private String dbName = null;
-    private String parseMode = null;
-    private Path logFilepath = null;
-    private String timeZone = "GMT";
-    private boolean printTrace = true;
 
     @Inject
     public LogParserBuilder(InfluxDAO storage, List<ILogParser> logParsers, List<IDataSetCreator> logDataSetCreators) {
@@ -40,44 +31,19 @@ public class LogParserBuilder {
         }
     }
 
-    public LogParser build() throws IOException {
-        ParserSettings settings = new ParserSettings(dbName, parseMode, timeZone, logFilepath, printTrace);
-        IDataSetCreator dataSetCreator = dataSetCreators.getOrDefault(parseMode, null);
-        ILogParser logParser = parsers.getOrDefault(parseMode, null);
+    public LogParser build(ParserSettings settings) throws IOException {
+
+        IDataSetCreator dataSetCreator = dataSetCreators.getOrDefault(settings.parseMode, null);
+        ILogParser logParser = parsers.getOrDefault(settings.parseMode, null);
         if(logParser == null || dataSetCreator == null)
             throw new IllegalArgumentException(
                     String.format("%s is unavailable! choose:[%s]",
-                            parseMode,
+                            settings.parseMode,
                             String.join(", ", parsers.keySet())));
 
-        DataSetManager dataSetManager = new DataSetManager(logStorage, dataSetCreator, dbName, printTrace);
-        logParser.getTimeParser().setTimeZone(timeZone);
-        PartitionReader partitionReader = new PartitionReader(logFilepath, logParser.getTimeParser().getTimePattern());
+        DataSetManager dataSetManager = new DataSetManager(logStorage, dataSetCreator, settings.dbName, settings.printTrace);
+        logParser.getTimeParser().setTimeZone(settings.timeZone);
+        PartitionReader partitionReader = new PartitionReader(settings.logFilepath, logParser.getTimeParser().getTimePattern());
         return new LogParser(partitionReader, logParser, dataSetManager, settings);
-    }
-
-    public LogParserBuilder dbName(String dbName) {
-        this.dbName = dbName;
-        return this;
-    }
-
-    public LogParserBuilder parseMode(String parseMode) {
-        this.parseMode = parseMode;
-        return this;
-    }
-
-    public LogParserBuilder logFilepath(Path logFilepath) {
-        this.logFilepath = logFilepath;
-        return this;
-    }
-
-    public LogParserBuilder timeZone(String timeZone) {
-        this.timeZone = timeZone;
-        return this;
-    }
-
-    public LogParserBuilder printTrace(boolean printTrace) {
-        this.printTrace = printTrace;
-        return this;
     }
 }

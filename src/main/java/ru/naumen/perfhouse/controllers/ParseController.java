@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.naumen.sd40.log.parser.LogParser;
 import ru.naumen.sd40.log.parser.LogParserBuilder;
+import ru.naumen.sd40.log.parser.Parsers.ParserSettings;
 
 import javax.inject.Inject;
 import java.io.File;
@@ -50,13 +51,8 @@ public class ParseController {
             if (!Files.exists(filepath))
                 Files.copy(file.getInputStream(), filepath);
 
-            LogParser logParser = parserBulder
-                    .dbName(dbName)
-                    .printTrace(logTrace != null)
-                    .logFilepath(filepath)
-                    .parseMode(parseMode)
-                    .timeZone(timeZone)
-                    .build();
+            ParserSettings settings = new ParserSettings(dbName, parseMode, timeZone, filepath, logTrace != null);
+            LogParser logParser = parserBulder.build(settings);
 
             logParser.parseAndSave();
 

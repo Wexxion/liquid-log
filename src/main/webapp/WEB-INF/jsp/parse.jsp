@@ -44,7 +44,7 @@
     <div id="myBar"></div>
 </div>
 <hr>
-<div align="center" id="done" style="display:none;font-size: 5em;">DONE PARSING</div>
+<div align="center" id="done" style="display:none;font-size: 5em;">Just a couple secs...</div>
 <script>
     function move() {
         var file = document.getElementsByName("file")[0];
