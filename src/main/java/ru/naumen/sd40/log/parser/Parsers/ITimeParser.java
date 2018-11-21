@@ -5,7 +5,8 @@ import java.util.Date;
 import java.util.regex.Pattern;
 
 public interface ITimeParser {
-    Date GetDate(String timeString) throws ParseException;
-    Pattern GetTimePattern();
-    void SetTimeZone(String timeZone);
+    Date getDate(String timeString) throws ParseException;
+    Pattern getTimePattern();
+    void setTimeZone(String timeZone);
+    void configureViaSettings(ParserSettings settings);
 }

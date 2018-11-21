@@ -3,15 +3,16 @@ package ru.naumen.sd40.log.parser;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-public class NumberUtils
-{
-    public static double roundToTwoPlaces(double value)
-    {
+public class NumberUtils {
+    public static double prepareDouble(double value) {
+        return roundToTwoPlaces(getSafeDouble(value));
+    }
+
+    public static double roundToTwoPlaces(double value) {
         return new BigDecimal(value).setScale(2, RoundingMode.UP).doubleValue();
     }
 
-    public static double getSafeDouble(double value)
-    {
+    public static double getSafeDouble(double value) {
         return Double.isNaN(value) ? 0.0d : value;
     }
 }

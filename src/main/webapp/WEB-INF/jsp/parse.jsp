@@ -44,14 +44,14 @@
     <div id="myBar"></div>
 </div>
 <hr>
-<div align="center" id="done" style="display:none;font-size: 5em;">DONE PARSING</div>
+<div align="center" id="done" style="display:none;font-size: 5em;">Just a couple secs...</div>
 <script>
     function move() {
         var file = document.getElementsByName("file")[0];
         var size = file.files[0].size / 1024 / 1024;
         var elem = document.getElementById("myBar");
         var width = 1;
-        var id = setInterval(frame, size * 11);
+        var id = setInterval(frame, size * 10);
         function frame() {
             if (width >= 100) {
                 clearInterval(id);

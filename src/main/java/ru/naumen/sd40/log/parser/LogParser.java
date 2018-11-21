@@ -1,8 +1,6 @@
 package ru.naumen.sd40.log.parser;
 
-import ru.naumen.sd40.log.parser.Parsers.IDataParser;
-import ru.naumen.sd40.log.parser.Parsers.ITimeParser;
-import ru.naumen.sd40.log.parser.Parsers.PartitionReader;
+import ru.naumen.sd40.log.parser.Parsers.*;
 
 import java.text.ParseException;
 import java.util.Date;
@@ -16,34 +14,36 @@ public class LogParser {
     private final IDataParser dataParser;
     private final DataSetManager dataSetManager;
 
-    public LogParser(PartitionReader reader, ITimeParser timeParser, IDataParser dataParser, DataSetManager dataSetManager) {
-
+    LogParser(PartitionReader reader, ILogParser logParser, DataSetManager dataSetManager, ParserSettings settings) {
         this.reader = reader;
-        this.timeParser = timeParser;
-        this.dataParser = dataParser;
+        this.timeParser = logParser.getTimeParser();
+        this.dataParser = logParser.getDataParser();
         this.dataSetManager = dataSetManager;
+
+        this.timeParser.configureViaSettings(settings);
+        this.dataParser.configureViaSettings(settings);
     }
 
     public void parseAndSave() throws ParseException {
         String part;
         long time;
 
-        while ((part = reader.GetNextPart()) != null) {
+        while ((part = reader.getNextPart()) != null) {
             if ((time = parseTime(part)) == 0)
                 continue;
 
             long key = (time / FiveMinutes) * FiveMinutes;
-            DataSet dataSet = dataSetManager.getDataSet(key);
-            dataParser.ParseLine(dataSet, part);
+            IDataSet dataSet = dataSetManager.getDataSet(key);
+            dataParser.parseLine(dataSet, part);
         }
     }
 
     private long parseTime(String line) throws ParseException {
-        Matcher matcher = timeParser.GetTimePattern().matcher(line);
+        Matcher matcher = timeParser.getTimePattern().matcher(line);
 
         if (matcher.find()) {
             String timeString = matcher.group(1);
-            Date recDate = timeParser.GetDate(timeString);
+            Date recDate = timeParser.getDate(timeString);
             return recDate.getTime();
         }
         return 0L;

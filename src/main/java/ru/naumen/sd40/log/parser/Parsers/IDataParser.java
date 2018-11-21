@@ -1,7 +1,6 @@
 package ru.naumen.sd40.log.parser.Parsers;
 
-import ru.naumen.sd40.log.parser.DataSet;
-
-public interface IDataParser {
-    public void ParseLine(DataSet dataSet, String line);
+public interface IDataParser<DataSet extends IDataSet> {
+    void parseLine(DataSet dataSet, String line);
+    void configureViaSettings(ParserSettings settings);
 }

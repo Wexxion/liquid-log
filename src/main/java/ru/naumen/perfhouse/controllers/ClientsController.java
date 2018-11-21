@@ -80,7 +80,7 @@ public class ClientsController
         try
         {
             client = client.replaceAll("-", "_");
-            influxDAO.createDb(client);
+            influxDAO.createDb(client, false);
             String data = IOUtils.toString(request.getInputStream(), "UTF-8");
             JSONObject measure = new JSONObject(data);
             influxDAO.storeFromJSon(null, client, measure);
