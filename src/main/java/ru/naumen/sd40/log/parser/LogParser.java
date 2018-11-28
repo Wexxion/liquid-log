@@ -16,7 +16,7 @@ public class LogParser {
 
     LogParser(PartitionReader reader, ILogParser logParser, DataSetManager dataSetManager, ParserSettings settings) {
         this.reader = reader;
-        this.timeParser = logParser.getTimeParser();
+        this.timeParser = logParser.getTimeParserCreator().create();
         this.dataParser = logParser.getDataParser();
         this.dataSetManager = dataSetManager;
 
