@@ -5,6 +5,7 @@ import ru.naumen.perfhouse.influx.ILogStorage;
 import ru.naumen.perfhouse.influx.InfluxDAO;
 import ru.naumen.sd40.log.parser.Parsers.IDataSetCreator;
 import ru.naumen.sd40.log.parser.Parsers.ILogParser;
+import ru.naumen.sd40.log.parser.Parsers.ITimeParser;
 import ru.naumen.sd40.log.parser.Parsers.ParserSettings;
 
 import javax.inject.Inject;
@@ -42,8 +43,9 @@ public class LogParserBuilder {
                             String.join(", ", parsers.keySet())));
 
         DataSetManager dataSetManager = new DataSetManager(logStorage, dataSetCreator, settings.dbName, settings.printTrace);
-        logParser.getTimeParser().setTimeZone(settings.timeZone);
-        PartitionReader partitionReader = new PartitionReader(settings.logFilepath, logParser.getTimeParser().getTimePattern());
+        ITimeParser timeParser = logParser.getTimeParserCreator().create();
+        timeParser.setTimeZone(settings.timeZone);
+        PartitionReader partitionReader = new PartitionReader(settings.logFilepath, timeParser.getTimePattern());
         return new LogParser(partitionReader, logParser, dataSetManager, settings);
     }
 }

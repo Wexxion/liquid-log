@@ -4,23 +4,24 @@ import org.springframework.stereotype.Component;
 import ru.naumen.sd40.log.parser.Parsers.IDataParser;
 import ru.naumen.sd40.log.parser.Parsers.ILogParser;
 import ru.naumen.sd40.log.parser.Parsers.ITimeParser;
+import ru.naumen.sd40.log.parser.Parsers.ITimeParserCreator;
 
 import javax.inject.Inject;
 
 @Component
 public class GCLogParser implements ILogParser {
-    private final GCTimeParser timeParser;
+    private final GCTimeParserCreator timeParserCreator;
     private final GCDataParser dataParser;
 
     @Inject
-    public GCLogParser(GCTimeParser timeParser, GCDataParser dataParser) {
-        this.timeParser = timeParser;
+    public GCLogParser(GCTimeParserCreator timeParserCreator, GCDataParser dataParser) {
+        this.timeParserCreator = timeParserCreator;
         this.dataParser = dataParser;
     }
 
     @Override
-    public ITimeParser getTimeParser() {
-        return timeParser;
+    public ITimeParserCreator getTimeParserCreator() {
+        return timeParserCreator;
     }
 
     @Override
