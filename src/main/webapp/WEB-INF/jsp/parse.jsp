@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: wexxi
@@ -29,9 +30,9 @@
     <label>
         Parsing mode:
         <select name="parseMode">
-            <option value="sdng">sdng</option>
-            <option value="gc">gc</option>
-            <option value="top">top</option>
+            <c:forEach items="${parseModes}" var="parseMode">
+                <option value="${parseMode}">${parseMode}</option>
+            </c:forEach>
         </select>
     </label><br>
     <label>File: <input type="file" name="file"></label><br>
