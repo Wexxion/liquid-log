@@ -36,7 +36,9 @@ public class ParseController {
 
     @RequestMapping(path = "/parse")
     public ModelAndView index() {
-        return new ModelAndView("parse", new HashMap<>(), HttpStatus.OK);
+        HashMap<String, Object> model = new HashMap<>();
+        model.put("parseModes", parserBulder.getAvailableParseModes());
+        return new ModelAndView("parse", model, HttpStatus.OK);
     }
 
     @RequestMapping(path = "/parse/upload", method = RequestMethod.POST)

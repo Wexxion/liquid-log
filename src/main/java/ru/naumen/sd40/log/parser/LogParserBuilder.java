@@ -12,6 +12,7 @@ import javax.inject.Inject;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 @Component
 public class LogParserBuilder {
@@ -30,6 +31,10 @@ public class LogParserBuilder {
         for (IDataSetCreator dataSetCreator : logDataSetCreators) {
             dataSetCreators.put(dataSetCreator.getModeName(), dataSetCreator);
         }
+    }
+
+    public Set<String> getAvailableParseModes() {
+        return parsers.keySet();
     }
 
     public LogParser build(ParserSettings settings) throws IOException {
