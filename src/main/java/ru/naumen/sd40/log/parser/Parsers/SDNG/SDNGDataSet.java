@@ -27,6 +27,7 @@ public class SDNGDataSet implements IDataSet {
     public static final String GET_CATALOGS_ACTIONS = "getCatalogsAction";
     public static final String SEARCH_ACTIONS = "searchActions";
     public static final String ACTIONS_COUNT = "count";
+    private final long time;
 
     public enum ActionType {
         AddObjectAction, EditObjectsAction, GetCatalogsAction,
@@ -42,7 +43,8 @@ public class SDNGDataSet implements IDataSet {
     private final HashMap<ActionType, Integer> actionCounters = new HashMap<>();
     private final HashMap<ErrorType, Integer> errorCounters = new HashMap<>();
 
-    public SDNGDataSet() {
+    public SDNGDataSet(long time) {
+        this.time = time;
         for(ActionType actionType : ActionType.values()){
             actionCounters.put(actionType, 0);
         }
@@ -70,8 +72,23 @@ public class SDNGDataSet implements IDataSet {
     }
 
     @Override
-    public HashMap<String, Object> getStat() {
+    public HashMap<String, Object> getStat(boolean printTrace) {
         HashMap<String, Object> result = new HashMap<>();
+        long count = stat.getN();
+        double min = stat.getMin();
+        double mean = stat.getMean();
+        double stddev = stat.getStandardDeviation();
+        double max = stat.getMax();
+        double percent50 = stat.getPercentile(50.0);
+        double percent95 = stat.getPercentile(95.0);
+        double percent99 = stat.getPercentile(99);
+        double percent999 = stat.getPercentile(99.9);
+        Integer errorCount = errorCounters.get(SDNGDataSet.ErrorType.Error);
+        if (printTrace) {
+            System.out.print(String.format("%d;%d;%f;%f;%f;%f;%f;%f;%f;%f;%d\n",
+                    time, count, min, mean, stddev, percent50, percent95,
+                    percent99, percent999, max, errorCount));
+        }
         result.put(COUNT, stat.getN());
         result.put(MIN, stat.getMin());
         result.put(MEAN, stat.getMean());

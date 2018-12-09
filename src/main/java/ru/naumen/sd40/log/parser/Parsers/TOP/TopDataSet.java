@@ -30,7 +30,7 @@ public class TopDataSet implements IDataSet {
     }
 
     @Override
-    public HashMap<String, Object> getStat() {
+    public HashMap<String, Object> getStat(boolean printTrace) {
         HashMap<String, Object> result = new HashMap<>();
         result.put(AVG_LA, prepareDouble(laStat.getMean()));
         result.put(AVG_CPU, prepareDouble(cpuStat.getMean()));

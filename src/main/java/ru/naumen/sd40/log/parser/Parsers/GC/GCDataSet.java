@@ -19,7 +19,7 @@ public class GCDataSet implements IDataSet {
     }
 
     @Override
-    public HashMap<String, Object> getStat() {
+    public HashMap<String, Object> getStat(boolean printTrace) {
         HashMap<String, Object> result = new HashMap<>();
         result.put(GCTIMES, stat.getN());
         result.put(AVARAGE_GC_TIME, stat.getMean());

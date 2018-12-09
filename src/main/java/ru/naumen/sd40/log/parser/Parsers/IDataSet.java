@@ -5,6 +5,6 @@ import java.util.List;
 
 public interface IDataSet {
     boolean isNan();
-    HashMap<String, Object> getStat();
+    HashMap<String, Object> getStat(boolean printTrace);
     List<String> getProps();
 }

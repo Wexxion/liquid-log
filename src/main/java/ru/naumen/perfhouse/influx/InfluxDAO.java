@@ -105,7 +105,7 @@ public class InfluxDAO implements ILogStorage {
 
         Point point = Point.measurement(Constants.MEASUREMENT_NAME)
                 .time(date, TimeUnit.MILLISECONDS)
-                .fields(dataSet.getStat())
+                .fields(dataSet.getStat(printTrace))
                 .build();
 
         influx.write(dbName, "autogen", point);

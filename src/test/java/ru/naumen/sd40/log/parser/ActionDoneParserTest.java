@@ -13,20 +13,20 @@ public class ActionDoneParserTest {
     @Test
     public void mustParseAddAction() {
         //given
-        SDNGDataSet dataSet = new SDNGDataSet();
+        SDNGDataSet dataSet = new SDNGDataSet(0);
         IDataParser parser = new SDNGDataParser();
 
         //when
         parser.parseLine(dataSet,"Done(10): AddObjectAction");
 
         //then
-        Assert.assertEquals(1, (int)(dataSet.getStat().get(SDNGDataSet.ADD_ACTIONS)));
+        Assert.assertEquals(1, (int)(dataSet.getStat(false).get(SDNGDataSet.ADD_ACTIONS)));
     }
 
     @Test
     public void mustParseFormActions() {
         //given
-        SDNGDataSet dataSet = new SDNGDataSet();
+        SDNGDataSet dataSet = new SDNGDataSet(0);
         IDataParser parser = new SDNGDataParser();
 
         //when
@@ -34,26 +34,26 @@ public class ActionDoneParserTest {
         parser.parseLine(dataSet,"Done(1): GetAddFormContextDataAction");
 
         //then
-        Assert.assertEquals(2, (int)(dataSet.getStat().get(SDNGDataSet.GET_FORM_ACTIONS)));
+        Assert.assertEquals(2, (int)(dataSet.getStat(false).get(SDNGDataSet.GET_FORM_ACTIONS)));
     }
 
     @Test
     public void mustParseEditObject() {
         //given
-        SDNGDataSet dataSet = new SDNGDataSet();
+        SDNGDataSet dataSet = new SDNGDataSet(0);
         IDataParser parser = new SDNGDataParser();
 
         //when
         parser.parseLine(dataSet,"Done(10): EditObjectAction");
 
         //then
-        Assert.assertEquals(1, (int)(dataSet.getStat().get(SDNGDataSet.EDIT_ACTIONS)));
+        Assert.assertEquals(1, (int)(dataSet.getStat(false).get(SDNGDataSet.EDIT_ACTIONS)));
     }
 
     @Test
     public void mustParseSearchObject(){
         //given
-        SDNGDataSet dataSet = new SDNGDataSet();
+        SDNGDataSet dataSet = new SDNGDataSet(0);
         IDataParser parser = new SDNGDataParser();
 
         //when
@@ -66,13 +66,13 @@ public class ActionDoneParserTest {
         parser.parseLine(dataSet,"Done(10): ExtendedSearchByFilterAction");
 
         //then
-        Assert.assertEquals(7, (int)(dataSet.getStat().get(SDNGDataSet.SEARCH_ACTIONS)));
+        Assert.assertEquals(7, (int)(dataSet.getStat(false).get(SDNGDataSet.SEARCH_ACTIONS)));
     }
 
     @Test
     public void mustParseGetList(){
         //given
-        SDNGDataSet dataSet = new SDNGDataSet();
+        SDNGDataSet dataSet = new SDNGDataSet(0);
         IDataParser parser = new SDNGDataParser();
 
         //when
@@ -85,13 +85,13 @@ public class ActionDoneParserTest {
         parser.parseLine(dataSet, "Done(10): GetDtObjectForRelObjListAction");
 
         //then
-        Assert.assertEquals(7, (int)(dataSet.getStat().get(SDNGDataSet.LIST_ACTIONS)));
+        Assert.assertEquals(7, (int)(dataSet.getStat(false).get(SDNGDataSet.LIST_ACTIONS)));
     }
 
     @Test
     public void mustParseComment(){
         //given
-        SDNGDataSet dataSet = new SDNGDataSet();
+        SDNGDataSet dataSet = new SDNGDataSet(0);
         IDataParser parser = new SDNGDataParser();
 
         //when
@@ -103,13 +103,13 @@ public class ActionDoneParserTest {
         parser.parseLine(dataSet, "Done(10): GetCommentDtObjectTemplateAction");
 
         //then
-        Assert.assertEquals(6, (int)(dataSet.getStat().get(SDNGDataSet.COMMENT_ACTIONS)));
+        Assert.assertEquals(6, (int)(dataSet.getStat(false).get(SDNGDataSet.COMMENT_ACTIONS)));
     }
 
     @Test
     public void mustParseDtObject(){
         //given
-        SDNGDataSet dataSet = new SDNGDataSet();
+        SDNGDataSet dataSet = new SDNGDataSet(0);
         IDataParser parser = new SDNGDataParser();
 
         //when
@@ -120,13 +120,13 @@ public class ActionDoneParserTest {
         parser.parseLine(dataSet, "Done(10): GetDtObjectTemplateAction");
 
         //then
-        Assert.assertEquals(5, (int)(dataSet.getStat().get(SDNGDataSet.GET_DT_OBJECT_ACTIONS)));
+        Assert.assertEquals(5, (int)(dataSet.getStat(false).get(SDNGDataSet.GET_DT_OBJECT_ACTIONS)));
     }
 
     @Test
     public void mustParseCatalogs(){
         //given
-        SDNGDataSet dataSet = new SDNGDataSet();
+        SDNGDataSet dataSet = new SDNGDataSet(0);
         IDataParser parser = new SDNGDataParser();
 
         //when
@@ -136,6 +136,6 @@ public class ActionDoneParserTest {
         parser.parseLine(dataSet, "Done(777):GetCatalogAction");
 
         //then
-        Assert.assertEquals(3, (int)(dataSet.getStat().get(SDNGDataSet.GET_CATALOGS_ACTIONS)));
+        Assert.assertEquals(3, (int)(dataSet.getStat(false).get(SDNGDataSet.GET_CATALOGS_ACTIONS)));
     }
 }

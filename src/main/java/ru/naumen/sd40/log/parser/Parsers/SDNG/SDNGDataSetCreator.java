@@ -7,12 +7,7 @@ import ru.naumen.sd40.log.parser.Parsers.IDataSetCreator;
 @Component
 class SDNGDataSetCreator implements IDataSetCreator {
     @Override
-    public IDataSet create() {
-        return new SDNGDataSet();
-    }
-
-    @Override
-    public String getModeName() {
-        return "sdng";
+    public IDataSet create(long time) {
+        return new SDNGDataSet(time);
     }
 }
