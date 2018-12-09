@@ -1,10 +1,7 @@
 package ru.naumen.sd40.log.parser.Parsers.GC;
 
 import org.springframework.stereotype.Component;
-import ru.naumen.sd40.log.parser.Parsers.IDataParser;
-import ru.naumen.sd40.log.parser.Parsers.ILogParser;
-import ru.naumen.sd40.log.parser.Parsers.ITimeParser;
-import ru.naumen.sd40.log.parser.Parsers.ITimeParserCreator;
+import ru.naumen.sd40.log.parser.Parsers.*;
 
 import javax.inject.Inject;
 
@@ -25,12 +22,12 @@ public class GCLogParser implements ILogParser {
     }
 
     @Override
-    public IDataParser getDataParser() {
-        return dataParser;
+    public IDataSetCreator getDataSetCreator() {
+        return new GCDataSetCreator();
     }
 
     @Override
-    public String getModeName() {
-        return "gc";
+    public IDataParser getDataParser() {
+        return dataParser;
     }
 }

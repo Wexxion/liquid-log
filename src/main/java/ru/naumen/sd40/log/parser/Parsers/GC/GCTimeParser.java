@@ -31,6 +31,11 @@ public class GCTimeParser implements ITimeParser {
     }
 
     @Override
+    public Pattern getPartitionPattern() {
+        return TIME_PATTERN;
+    }
+
+    @Override
     public void setTimeZone(String timeZone) {
         DATE_FORMAT.setTimeZone(TimeZone.getTimeZone(timeZone));
     }
