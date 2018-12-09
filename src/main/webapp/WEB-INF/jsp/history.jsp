@@ -4,7 +4,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="org.influxdb.dto.QueryResult.Series" %>
-<%@ page import="ru.naumen.perfhouse.statdata.Constants.ResponseTimes" %>
+<%@ page import="ru.naumen.sd40.log.parser.Parsers.SDNG.SDNGDataSet" %>
 
 <html>
 
@@ -24,15 +24,15 @@
 
 <script src="http://code.highcharts.com/highcharts.js"></script>
 <%
-    Number p50[] = (Number[])request.getAttribute(Constants.ResponseTimes.PERCENTILE50);
-    Number p95[] = (Number[])request.getAttribute(Constants.ResponseTimes.PERCENTILE95);
-    Number p99[] = (Number[])request.getAttribute(Constants.ResponseTimes.PERCENTILE99);
-    Number p999[] = (Number[])request.getAttribute(Constants.ResponseTimes.PERCENTILE999);
-    Number p100[] = (Number[])request.getAttribute(Constants.ResponseTimes.MAX);
-    Number count[]= (Number[])request.getAttribute(Constants.ResponseTimes.COUNT);
-    Number errors[]= (Number[])request.getAttribute(Constants.ResponseTimes.ERRORS);
-    Number mean[]= (Number[])request.getAttribute(Constants.ResponseTimes.MEAN);
-    Number stddev[]= (Number[])request.getAttribute(Constants.ResponseTimes.STDDEV);
+    Number p50[] = (Number[])request.getAttribute(SDNGDataSet.Fields.ResponseTimes.PERCENTILE50);
+    Number p95[] = (Number[])request.getAttribute(SDNGDataSet.Fields.ResponseTimes.PERCENTILE95);
+    Number p99[] = (Number[])request.getAttribute(SDNGDataSet.Fields.ResponseTimes.PERCENTILE99);
+    Number p999[] = (Number[])request.getAttribute(SDNGDataSet.Fields.ResponseTimes.PERCENTILE999);
+    Number p100[] = (Number[])request.getAttribute(SDNGDataSet.Fields.ResponseTimes.MAX);
+    Number count[]= (Number[])request.getAttribute(SDNGDataSet.Fields.ResponseTimes.COUNT);
+    Number errors[]= (Number[])request.getAttribute(SDNGDataSet.Fields.ResponseTimes.ERRORS);
+    Number mean[]= (Number[])request.getAttribute(SDNGDataSet.Fields.ResponseTimes.MEAN);
+    Number stddev[]= (Number[])request.getAttribute(SDNGDataSet.Fields.ResponseTimes.STDDEV);
     Number times[] = (Number[])request.getAttribute(Constants.TIME);
     
   //Prepare links

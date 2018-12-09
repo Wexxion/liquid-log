@@ -4,6 +4,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="org.influxdb.dto.QueryResult.Series" %>
+<%@ page import="ru.naumen.sd40.log.parser.Parsers.GC.GCDataSet" %>
 
 <html>
 
@@ -24,9 +25,9 @@
 <script src="http://code.highcharts.com/highcharts.js"></script>
 <%
     Number times[] = (Number[])request.getAttribute(Constants.TIME);
-    Number gcTimes[]=  (Number[])request.getAttribute(Constants.GarbageCollection.GCTIMES);
-    Number gcAvg[] = (Number[])request.getAttribute(Constants.GarbageCollection.AVARAGE_GC_TIME);
-    Number gcMax[] = (Number[])request.getAttribute(Constants.GarbageCollection.MAX_GC_TIME);
+    Number gcTimes[]=  (Number[])request.getAttribute(GCDataSet.Fields.GCTIMES);
+    Number gcAvg[] = (Number[])request.getAttribute(GCDataSet.Fields.AVARAGE_GC_TIME);
+    Number gcMax[] = (Number[])request.getAttribute(GCDataSet.Fields.MAX_GC_TIME);
     
   //Prepare links
   	String path="";

@@ -5,6 +5,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="org.influxdb.dto.QueryResult.Series" %>
+<%@ page import="ru.naumen.sd40.log.parser.Parsers.SDNG.SDNGDataSet" %>
 
 <html>
 
@@ -25,15 +26,15 @@
 <script src="http://code.highcharts.com/highcharts.js"></script>
 <%
     Number times[] = (Number[])request.getAttribute(Constants.TIME);
-    Number add[]=  (Number[])request.getAttribute(Constants.PerformedActions.ADD_ACTIONS);
-    Number edit[] = (Number[])request.getAttribute(Constants.PerformedActions.EDIT_ACTIONS);
-    Number catalogs[] = (Number[])request.getAttribute(Constants.PerformedActions.GET_CATALOGS_ACTIONS);
-    Number list[] = (Number[])request.getAttribute(Constants.PerformedActions.LIST_ACTIONS);
-    Number comment[] = (Number[])request.getAttribute(Constants.PerformedActions.COMMENT_ACTIONS);
-    Number form[] = (Number[])request.getAttribute(Constants.PerformedActions.GET_FORM_ACTIONS);
-    Number dtos[] = (Number[])request.getAttribute(Constants.PerformedActions.GET_DT_OBJECT_ACTIONS);
-    Number search[] = (Number[])request.getAttribute(Constants.PerformedActions.SEARCH_ACTIONS);
-    Number actionsSumm[] = (Number[])request.getAttribute(Constants.PerformedActions.ACTIONS_COUNT);
+    Number add[]=  (Number[])request.getAttribute(SDNGDataSet.Fields.PerformedActions.ADD_ACTIONS);
+    Number edit[] = (Number[])request.getAttribute(SDNGDataSet.Fields.PerformedActions.EDIT_ACTIONS);
+    Number catalogs[] = (Number[])request.getAttribute(SDNGDataSet.Fields.PerformedActions.GET_CATALOGS_ACTIONS);
+    Number list[] = (Number[])request.getAttribute(SDNGDataSet.Fields.PerformedActions.LIST_ACTIONS);
+    Number comment[] = (Number[])request.getAttribute(SDNGDataSet.Fields.PerformedActions.COMMENT_ACTIONS);
+    Number form[] = (Number[])request.getAttribute(SDNGDataSet.Fields.PerformedActions.GET_FORM_ACTIONS);
+    Number dtos[] = (Number[])request.getAttribute(SDNGDataSet.Fields.PerformedActions.GET_DT_OBJECT_ACTIONS);
+    Number search[] = (Number[])request.getAttribute(SDNGDataSet.Fields.PerformedActions.SEARCH_ACTIONS);
+    Number actionsSumm[] = (Number[])request.getAttribute(SDNGDataSet.Fields.PerformedActions.ACTIONS_COUNT);
     
     
   //Prepare links

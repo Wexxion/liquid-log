@@ -1,30 +1,21 @@
 package ru.naumen.perfhouse.statdata;
 
-import java.util.List;
+import ru.naumen.sd40.log.parser.Parsers.GC.GCDataSet;
+import ru.naumen.sd40.log.parser.Parsers.SDNG.SDNGDataSet;
+import ru.naumen.sd40.log.parser.Parsers.TOP.TopDataSet;
 
-import ru.naumen.perfhouse.statdata.Constants.Top;
-import ru.naumen.perfhouse.statdata.Constants.GarbageCollection;
-import ru.naumen.perfhouse.statdata.Constants.PerformedActions;
-import ru.naumen.perfhouse.statdata.Constants.ResponseTimes;
+import java.util.List;
 
 public enum DataType
 {
-    //@formatter:off
-    RESPONSE(ResponseTimes.getProps()),
-    GARBAGE_COLLECTION(GarbageCollection.getProps()),
-    ACTIONS(PerformedActions.getProps()),
-    TOP(Top.getProps());
-    //@formtatter:on
+    GARBAGE_COLLECTION(GCDataSet.Fields.getProps()),
+    RESPONSE(SDNGDataSet.Fields.ResponseTimes.getProps()),
+    ACTIONS(SDNGDataSet.Fields.PerformedActions.getProps()),
+    TOP(TopDataSet.Fields.getProps());
     
     private List<String> properties;
 
-    DataType(List<String> properties)
-    {
-        this.properties = properties;
-    }
+    DataType(List<String> properties) { this.properties = properties; }
 
-    List<String> getTypeProperties()
-    {
-        return this.properties;
-    }
+    List<String> getTypeProperties() { return this.properties; }
 }
