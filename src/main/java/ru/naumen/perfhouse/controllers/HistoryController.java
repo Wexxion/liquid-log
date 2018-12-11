@@ -168,9 +168,7 @@ public class HistoryController
     {
         StatData data = service.getDataCustom(client, dataType, from, to);
         if (data == null)
-        {
             return new ModelAndView(NO_HISTORY_VIEW);
-        }
         data = service.compress(data, maxResults);
         Map<String, Object> model = new HashMap<>(data.asModel());
         model.put("client", client);

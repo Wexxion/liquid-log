@@ -1,12 +1,9 @@
 package ru.naumen.sd40.log.parser.Parsers.SDNG;
 
-import com.google.common.collect.Lists;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
-import ru.naumen.perfhouse.statdata.Constants;
 import ru.naumen.sd40.log.parser.Parsers.IDataSet;
 
 import java.util.HashMap;
-import java.util.List;
 
 public class SDNGDataSet implements IDataSet {
     private final long time;
@@ -74,67 +71,25 @@ public class SDNGDataSet implements IDataSet {
                     percent99, percent999, max, errorCount));
         }
 
-        result.put(Fields.ResponseTimes.COUNT, stat.getN());
-        result.put(Fields.ResponseTimes.MIN, stat.getMin());
-        result.put(Fields.ResponseTimes.MEAN, stat.getMean());
-        result.put(Fields.ResponseTimes.STDDEV, stat.getStandardDeviation());
-        result.put(Fields.ResponseTimes.PERCENTILE50, stat.getPercentile(50.0));
-        result.put(Fields.ResponseTimes.PERCENTILE95, stat.getPercentile(95.0));
-        result.put(Fields.ResponseTimes.PERCENTILE99, stat.getPercentile(99));
-        result.put(Fields.ResponseTimes.PERCENTILE999, stat.getPercentile(99.9));
-        result.put(Fields.ResponseTimes.MAX, stat.getMax());
-        result.put(Fields.ResponseTimes.ERRORS, errorCounters.get(ErrorType.Error));
-        result.put(Fields.PerformedActions.ADD_ACTIONS, actionCounters.get(ActionType.AddObjectAction));
-        result.put(Fields.PerformedActions.EDIT_ACTIONS, actionCounters.get(ActionType.EditObjectsAction));
-        result.put(Fields.PerformedActions.LIST_ACTIONS, actionCounters.get(ActionType.GetListAction));
-        result.put(Fields.PerformedActions.COMMENT_ACTIONS, actionCounters.get(ActionType.CommentAction));
-        result.put(Fields.PerformedActions.GET_FORM_ACTIONS, actionCounters.get(ActionType.GetFormAction));
-        result.put(Fields.PerformedActions.GET_DT_OBJECT_ACTIONS, actionCounters.get(ActionType.GetDtObjectAction));
-        result.put(Fields.PerformedActions.GET_CATALOGS_ACTIONS, actionCounters.get(ActionType.GetCatalogsAction));
-        result.put(Fields.PerformedActions.SEARCH_ACTIONS, actionCounters.get(ActionType.SearchAction));
+        result.put(ResponseTimesDataType.COUNT, stat.getN());
+        result.put(ResponseTimesDataType.MIN, stat.getMin());
+        result.put(ResponseTimesDataType.MEAN, stat.getMean());
+        result.put(ResponseTimesDataType.STDDEV, stat.getStandardDeviation());
+        result.put(ResponseTimesDataType.PERCENTILE50, stat.getPercentile(50.0));
+        result.put(ResponseTimesDataType.PERCENTILE95, stat.getPercentile(95.0));
+        result.put(ResponseTimesDataType.PERCENTILE99, stat.getPercentile(99));
+        result.put(ResponseTimesDataType.PERCENTILE999, stat.getPercentile(99.9));
+        result.put(ResponseTimesDataType.MAX, stat.getMax());
+        result.put(ResponseTimesDataType.ERRORS, errorCounters.get(ErrorType.Error));
+        result.put(PerformedActionsDataType.ADD_ACTIONS, actionCounters.get(ActionType.AddObjectAction));
+        result.put(PerformedActionsDataType.EDIT_ACTIONS, actionCounters.get(ActionType.EditObjectsAction));
+        result.put(PerformedActionsDataType.LIST_ACTIONS, actionCounters.get(ActionType.GetListAction));
+        result.put(PerformedActionsDataType.COMMENT_ACTIONS, actionCounters.get(ActionType.CommentAction));
+        result.put(PerformedActionsDataType.GET_FORM_ACTIONS, actionCounters.get(ActionType.GetFormAction));
+        result.put(PerformedActionsDataType.GET_DT_OBJECT_ACTIONS, actionCounters.get(ActionType.GetDtObjectAction));
+        result.put(PerformedActionsDataType.GET_CATALOGS_ACTIONS, actionCounters.get(ActionType.GetCatalogsAction));
+        result.put(PerformedActionsDataType.SEARCH_ACTIONS, actionCounters.get(ActionType.SearchAction));
 
         return result;
-    }
-
-    public static class Fields {
-        public static class ResponseTimes
-        {
-            public static final String PERCENTILE50 = "percent50";
-            public static final String PERCENTILE95 = "percent95";
-            public static final String PERCENTILE99 = "percent99";
-            public static final String PERCENTILE999 = "percent999";
-            public static final String MAX = "max";
-            public static final String MIN = "min";
-            public static final String COUNT = "count";
-            public static final String ERRORS = "errors";
-            public static final String MEAN = "mean";
-            public static final String STDDEV = "stddev";
-
-            public static List<String> getProps()
-            {
-                return Lists.newArrayList(Constants.TIME, COUNT, ERRORS, MEAN, STDDEV, PERCENTILE50, PERCENTILE95, PERCENTILE99,
-                        PERCENTILE999, MAX);
-            }
-        }
-
-        public static class PerformedActions
-        {
-            public static final String ADD_ACTIONS = "addActions";
-            public static final String EDIT_ACTIONS = "editActions";
-            public static final String LIST_ACTIONS = "listActions";
-            public static final String COMMENT_ACTIONS = "commentActions";
-            public static final String GET_FORM_ACTIONS = "getFormActions";
-            public static final String GET_DT_OBJECT_ACTIONS = "getDtObjectActions";
-            public static final String GET_CATALOGS_ACTIONS = "getCatalogsAction";
-            public static final String SEARCH_ACTIONS = "searchActions";
-            public static final String ACTIONS_COUNT = "count";
-
-            public static List<String> getProps()
-            {
-                return Lists.newArrayList(Constants.TIME, ADD_ACTIONS, EDIT_ACTIONS, LIST_ACTIONS, COMMENT_ACTIONS, ACTIONS_COUNT,
-                        GET_FORM_ACTIONS, GET_DT_OBJECT_ACTIONS, GET_CATALOGS_ACTIONS, SEARCH_ACTIONS);
-            }
-
-        }
     }
 }
