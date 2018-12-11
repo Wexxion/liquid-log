@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="ru.naumen.perfhouse.statdata.Constants"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="ru.naumen.sd40.log.parser.Parsers.GC.GCDataType" %>
@@ -24,136 +25,137 @@
     Number gcTimes[]=  (Number[])request.getAttribute(GCDataType.GCTIMES);
     Number gcAvg[] = (Number[])request.getAttribute(GCDataType.AVARAGE_GC_TIME);
     Number gcMax[] = (Number[])request.getAttribute(GCDataType.MAX_GC_TIME);
-    
-  //Prepare links
-  	String path="";
-  	String custom = "";
-  	if(request.getAttribute("custom") == null){
-  	Object year = request.getAttribute("year");
-  	Object month = request.getAttribute("month");
-  	Object day = request.getAttribute("day");
-      
-      String countParam = request.getParameter("count");
-      
-  	String params = "";
-  	String datePath = "";
 
-  	StringBuilder sb = new StringBuilder();
+    //Prepare links
+    String path="";
+    String custom = "";
+    if(request.getAttribute("custom") == null){
+        Object year = request.getAttribute("year");
+        Object month = request.getAttribute("month");
+        Object day = request.getAttribute("day");
+
+        String countParam = request.getParameter("count");
+
+        String params = "";
+        String datePath = "";
+
+        StringBuilder sb = new StringBuilder();
 
 
-  	if(countParam != null){
-      	params = sb.append("?count=").append(countParam).toString();
-  	}else{
-      	sb.append('/').append(year).append('/').append(month);
-      	if(!day.toString().equals("0")){
-          	sb.append('/').append(day);
-      	}
-      	datePath = sb.toString();
-  	}
-  	path = datePath + params;
-  	}
-  	else{
-  	    custom = "/custom";
-  	    Object from = request.getAttribute("from");
-  	  	Object to = request.getAttribute("to");
-  	  	Object maxResults = request.getAttribute("maxResults");
-  	  	
-  	  	StringBuilder sb = new StringBuilder();
-  	  	path = sb.append("?from=").append(from).append("&to=").append(to).append("&maxResults=").append(maxResults).toString();
-  	}
-      
-    
+        if(countParam != null){
+            params = sb.append("?count=").append(countParam).toString();
+        }else{
+            sb.append('/').append(year).append('/').append(month);
+            if(!day.toString().equals("0")){
+                sb.append('/').append(day);
+            }
+            datePath = sb.toString();
+        }
+        path = datePath + params;
+    }
+    else{
+        custom = "/custom";
+        Object from = request.getAttribute("from");
+        Object to = request.getAttribute("to");
+        Object maxResults = request.getAttribute("maxResults");
+
+        StringBuilder sb = new StringBuilder();
+        path = sb.append("?from=").append(from).append("&to=").append(to).append("&maxResults=").append(maxResults).toString();
+    }
+
+
 %>
-
 <div class="container">
-	<br>
+    <br>
     <h1>Performance data for "${client}"</h1>
     <h3><a class="btn btn-success btn-lg" href="/">Client list</a></h3>
     <h4 id="date_range"></h4>
-    <p>
-        Feel free to hide/show specific data by clicking on chart's legend
-    </p>
+    <p>Feel free to hide/show specific data by clicking on chart's legend</p>
     <ul class="nav nav-pills">
-		<li class="nav-item"><a class="btn btn-outline-primary" href="/history/${client}<%=custom %><%=path%>">Responses</a></li>
-		<li class="nav-item"><a class="btn btn-outline-primary" href="/history/${client}<%=custom %>/actions<%=path%>">Performed actions</a></li>
-		<li class="nav-item"><a class="nav-link active">Garbage Collection</a></li>
-		<li class="nav-item"><a class="btn btn-outline-primary" href="/history/${client}<%=custom %>/top<%=path%>">Top data</a></li>
-	</ul>
+        <li class="nav-item"><a class="nav-link active">Garbage Collection</a></li>
+        <c:forEach items="${dataTypes}" var="dataType">
+            <li class="nav-item">
+                <a class="btn btn-outline-primary"
+                   href="/history/${client}<%=custom %>/${dataType}<%=path%>">
+                        ${dataType}
+                </a>
+            </li>
+        </c:forEach>
+    </ul>
 </div>
-
 <!-- Gc chart -->
 <div class="container" id="gc">
-<div id="gc-chart-container" style="height: 600px"></div>
-<div class="scroll-container">
-	<table class="table table-fixed header-fixed">
-        <thead class="thead-inverse">
+    <div id="gc-chart-container" style="height: 600px"></div>
+    <div class="scroll-container">
+        <table class="table table-fixed header-fixed">
+            <thead class="thead-inverse">
             <th class="col-xs-3">Time</th>
             <th class="col-xs-3">Number of performed GC</th>
             <th class="col-xs-3">Avarage GC time, ms</th>
             <th class="col-xs-3">Max GC Time,ms</th>
-        </thead>
-        <tbody >
+            </thead>
+            <tbody >
             <% for(int i=0;i<times.length;i++) {%>
-                <tr class="row">
-                    <td class="col-xs-3" style="text-align:center;">
-                       <%= new java.util.Date(times[i].longValue()).toString() %>
-                    </td>
-                    <td class="col-xs-3" >
-                        <%= gcTimes[i].intValue() %>
-                    </td>
-                    <td class="col-xs-3">
-                        <%= gcAvg[i] %>
-                    </td>
-                    <td class="col-xs-3">
-                        <%= gcMax[i] %>
-                    </td>
-                </tr>
+            <tr class="row">
+                <td class="col-xs-3" style="text-align:center;">
+                    <%= new java.util.Date(times[i].longValue()).toString() %>
+                </td>
+                <td class="col-xs-3" >
+                    <%= gcTimes[i].intValue() %>
+                </td>
+                <td class="col-xs-3">
+                    <%= gcAvg[i] %>
+                </td>
+                <td class="col-xs-3">
+                    <%= gcMax[i] %>
+                </td>
+            </tr>
             <% } %>
-        </tbody>
-    </table>
-</div>
+            </tbody>
+        </table>
+    </div>
 
 </div>
 <script type="text/javascript">
-var times = [];
-var gcTimes = [];
-var gcAvg = [];
-var gcMaxTime = [];
+    var times = [];
+    var gcTimes = [];
+    var gcAvg = [];
+    var gcMaxTime = [];
 
-<% for(int i=0;i<times.length;i++) {%>
+    <% for(int i=0;i<times.length;i++) {%>
     times.push((<%=times[i]%>));
     gcTimes.push([new Date(<%= times[i] %>), <%= Math.round(gcTimes[i].doubleValue()) %>]);
     gcAvg.push([new Date(<%= times[i] %>), <%= gcAvg[i] %>]);
     gcMaxTime.push([new Date(<%= times[i] %>), <%= gcMax[i] %>]);
-<% } %>
+    <% } %>
 
-document.getElementById('date_range').innerHTML += 'From: '+new Date(times[<%=times.length%>-1])+'<br/>To:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +new Date(times[0])
+    document.getElementById('date_range').innerHTML += 'From: '+new Date(times[<%=times.length%>-1])+'<br/>To:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +new Date(times[0])
 
-if(localStorage.getItem('gcTimes')==null){
-    localStorage.setItem('gcTimes', 'false');
-}
-if(localStorage.getItem('avgGcTime')==null){
-    localStorage.setItem('avgGcTime', 'false');
-}
-if(localStorage.getItem('maxGcTime')==null){
-    localStorage.setItem('maxGcTime', 'true');
-}
+    if(localStorage.getItem('gcTimes')==null){
+        localStorage.setItem('gcTimes', 'false');
+    }
+    if(localStorage.getItem('avgGcTime')==null){
+        localStorage.setItem('avgGcTime', 'false');
+    }
+    if(localStorage.getItem('maxGcTime')==null){
+        localStorage.setItem('maxGcTime', 'true');
+    }
 
 
-var gcTimesvisible = localStorage.getItem('gcTimes')==='true';
-var avgGcTimevisible = localStorage.getItem('avgGcTime')==='true';
-var maxGcTimevisible = localStorage.getItem('maxGcTime')==='true';
+    var gcTimesvisible = localStorage.getItem('gcTimes')==='true';
+    var avgGcTimevisible = localStorage.getItem('avgGcTime')==='true';
+    var maxGcTimevisible = localStorage.getItem('maxGcTime')==='true';
 
-Highcharts.setOptions({
-	global: {
-		useUTC: false
-	}
-});
+    Highcharts.setOptions({
+        global: {
+            useUTC: false
+        }
+    });
 
-var myChart = Highcharts.chart('gc-chart-container', {
+    var myChart = Highcharts.chart('gc-chart-container', {
         chart: {
-                zoomType: 'x,y'
-            },
+            zoomType: 'x,y'
+        },
 
         title: {
             text: 'Garbage collection'
@@ -161,11 +163,11 @@ var myChart = Highcharts.chart('gc-chart-container', {
 
         tooltip: {
             formatter: function() {
-                            var index = this.point.index;
-                            var date =  new Date(times[index]);
-                            return Highcharts.dateFormat('%a %d %b %H:%M:%S', date)
-                            + '<br/> <b>'+this.series.name+'</b> '+ this.y + ' '+this.series.options.unit+ '<br/>'
-                        }
+                var index = this.point.index;
+                var date =  new Date(times[index]);
+                return Highcharts.dateFormat('%a %d %b %H:%M:%S', date)
+                    + '<br/> <b>'+this.series.name+'</b> '+ this.y + ' '+this.series.options.unit+ '<br/>'
+            }
         },
 
         xAxis: {
@@ -173,10 +175,10 @@ var myChart = Highcharts.chart('gc-chart-container', {
                 formatter:function(obj){
 //                        var index = this.point.index;
 //                        var date =  new Date(times[index]);
-                        return Highcharts.dateFormat('%a %d %b %H:%M:%S', new Date(times[this.value]));
-                    }
-                },
-                reversed: true
+                    return Highcharts.dateFormat('%a %d %b %H:%M:%S', new Date(times[this.value]));
+                }
+            },
+            reversed: true
         },
 
         yAxis: {
@@ -224,7 +226,7 @@ var myChart = Highcharts.chart('gc-chart-container', {
             visible: avgGcTimevisible,
             unit: 'ms',
             turboThreshold: 10000
-            
+
         }, {
             name: 'Max GC Time',
             data: gcMaxTime,
@@ -232,7 +234,7 @@ var myChart = Highcharts.chart('gc-chart-container', {
             unit: 'ms',
             turboThreshold: 10000
         }]
-});
+    });
 
 </script>
 

@@ -1,23 +1,22 @@
 package ru.naumen.sd40.log.parser.Parsers.TOP;
 
-import com.google.common.collect.Lists;
 import org.springframework.stereotype.Component;
-import ru.naumen.sd40.log.parser.Parsers.*;
+import ru.naumen.sd40.log.parser.Parsers.IDataParser;
+import ru.naumen.sd40.log.parser.Parsers.IDataSetCreator;
+import ru.naumen.sd40.log.parser.Parsers.ILogParser;
+import ru.naumen.sd40.log.parser.Parsers.ITimeParserCreator;
 
 import javax.inject.Inject;
-import java.util.List;
 
 @Component
 public class TOPLogParser implements ILogParser {
     private final TOPTimeParserCreator timeParserCreator;
     private final TOPDataParser dataParser;
-    private final TopDataType dataType;
 
     @Inject
     public TOPLogParser(TOPTimeParserCreator timeParserCreator, TOPDataParser dataParser) {
         this.timeParserCreator = timeParserCreator;
         this.dataParser = dataParser;
-        this.dataType = new TopDataType();
     }
 
     @Override
@@ -33,10 +32,5 @@ public class TOPLogParser implements ILogParser {
     @Override
     public IDataParser getDataParser() {
         return dataParser;
-    }
-
-    @Override
-    public List<IDataType> getDataTypes() {
-        return Lists.newArrayList(dataType);
     }
 }

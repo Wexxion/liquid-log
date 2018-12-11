@@ -67,8 +67,8 @@
         <c:forEach items="${dataTypes}" var="dataType">
             <li class="nav-item">
                 <a class="btn btn-outline-primary"
-                   href="/history/${client}<%=custom %>/${dataType.getPrefix()}<%=path%>">
-                        ${dataType.getName()}
+                   href="/history/${client}<%=custom %>/${dataType}<%=path%>">
+                        ${dataType}
                 </a>
             </li>
         </c:forEach>

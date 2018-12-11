@@ -6,5 +6,4 @@ public interface ILogParser {
     ITimeParserCreator getTimeParserCreator();
     IDataSetCreator getDataSetCreator();
     IDataParser getDataParser();
-    List<IDataType> getDataTypes();
 }
