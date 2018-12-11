@@ -1,10 +1,12 @@
 package ru.naumen.sd40.log.parser.Parsers.TOP;
 
 import com.google.common.collect.Lists;
+import org.springframework.stereotype.Component;
 import ru.naumen.sd40.log.parser.Parsers.IDataType;
 
 import java.util.List;
 
+@Component
 public class TopDataType implements IDataType {
     public static final String AVG_LA = "avgLa";
     public static final String AVG_CPU = "avgCpu";

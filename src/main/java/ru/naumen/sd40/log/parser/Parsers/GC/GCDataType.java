@@ -1,10 +1,12 @@
 package ru.naumen.sd40.log.parser.Parsers.GC;
 
 import com.google.common.collect.Lists;
+import org.springframework.stereotype.Component;
 import ru.naumen.sd40.log.parser.Parsers.IDataType;
 
 import java.util.List;
 
+@Component
 public class GCDataType implements IDataType {
     public static final String GCTIMES = "gcTimes";
     public static final String AVARAGE_GC_TIME = "avgGcTime";

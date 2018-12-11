@@ -1,10 +1,6 @@
 <%@page import="ru.naumen.perfhouse.statdata.Constants"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="java.util.Map" %>
-<%@ page import="java.util.List" %>
-<%@ page import="java.util.Date" %>
-<%@ page import="org.influxdb.dto.QueryResult.Series" %>
-<%@ page import="ru.naumen.sd40.log.parser.Parsers.GC.GCDataSet" %>
+<%@ page import="ru.naumen.sd40.log.parser.Parsers.GC.GCDataType" %>
 
 <html>
 
@@ -25,9 +21,9 @@
 <script src="http://code.highcharts.com/highcharts.js"></script>
 <%
     Number times[] = (Number[])request.getAttribute(Constants.TIME);
-    Number gcTimes[]=  (Number[])request.getAttribute(GCDataSet.Fields.GCTIMES);
-    Number gcAvg[] = (Number[])request.getAttribute(GCDataSet.Fields.AVARAGE_GC_TIME);
-    Number gcMax[] = (Number[])request.getAttribute(GCDataSet.Fields.MAX_GC_TIME);
+    Number gcTimes[]=  (Number[])request.getAttribute(GCDataType.GCTIMES);
+    Number gcAvg[] = (Number[])request.getAttribute(GCDataType.AVARAGE_GC_TIME);
+    Number gcMax[] = (Number[])request.getAttribute(GCDataType.MAX_GC_TIME);
     
   //Prepare links
   	String path="";
@@ -37,7 +33,7 @@
   	Object month = request.getAttribute("month");
   	Object day = request.getAttribute("day");
       
-      String countParam = (String)request.getParameter("count");
+      String countParam = request.getParameter("count");
       
   	String params = "";
   	String datePath = "";

@@ -20,7 +20,7 @@ public class ActionDoneParserTest {
         parser.parseLine(dataSet,"Done(10): AddObjectAction");
 
         //then
-        Assert.assertEquals(1, (int)(dataSet.getStat(false).get(SDNGDataSet.Fields.PerformedActions.ADD_ACTIONS)));
+        Assert.assertEquals(1, (int)(dataSet.getStat(false).get(PerformedActions.ADD_ACTIONS)));
     }
 
     @Test
@@ -34,7 +34,7 @@ public class ActionDoneParserTest {
         parser.parseLine(dataSet,"Done(1): GetAddFormContextDataAction");
 
         //then
-        Assert.assertEquals(2, (int)(dataSet.getStat(false).get(SDNGDataSet.Fields.PerformedActions.GET_FORM_ACTIONS)));
+        Assert.assertEquals(2, (int)(dataSet.getStat(false).get(PerformedActions.GET_FORM_ACTIONS)));
     }
 
     @Test
@@ -47,7 +47,7 @@ public class ActionDoneParserTest {
         parser.parseLine(dataSet,"Done(10): EditObjectAction");
 
         //then
-        Assert.assertEquals(1, (int)(dataSet.getStat(false).get(SDNGDataSet.Fields.PerformedActions.EDIT_ACTIONS)));
+        Assert.assertEquals(1, (int)(dataSet.getStat(false).get(PerformedActions.EDIT_ACTIONS)));
     }
 
     @Test
@@ -66,7 +66,7 @@ public class ActionDoneParserTest {
         parser.parseLine(dataSet,"Done(10): ExtendedSearchByFilterAction");
 
         //then
-        Assert.assertEquals(7, (int)(dataSet.getStat(false).get(SDNGDataSet.Fields.PerformedActions.SEARCH_ACTIONS)));
+        Assert.assertEquals(7, (int)(dataSet.getStat(false).get(PerformedActions.SEARCH_ACTIONS)));
     }
 
     @Test
@@ -85,7 +85,7 @@ public class ActionDoneParserTest {
         parser.parseLine(dataSet, "Done(10): GetDtObjectForRelObjListAction");
 
         //then
-        Assert.assertEquals(7, (int)(dataSet.getStat(false).get(SDNGDataSet.Fields.PerformedActions.LIST_ACTIONS)));
+        Assert.assertEquals(7, (int)(dataSet.getStat(false).get(PerformedActions.LIST_ACTIONS)));
     }
 
     @Test
@@ -103,7 +103,7 @@ public class ActionDoneParserTest {
         parser.parseLine(dataSet, "Done(10): GetCommentDtObjectTemplateAction");
 
         //then
-        Assert.assertEquals(6, (int)(dataSet.getStat(false).get(SDNGDataSet.Fields.PerformedActions.COMMENT_ACTIONS)));
+        Assert.assertEquals(6, (int)(dataSet.getStat(false).get(PerformedActions.COMMENT_ACTIONS)));
     }
 
     @Test
@@ -120,7 +120,7 @@ public class ActionDoneParserTest {
         parser.parseLine(dataSet, "Done(10): GetDtObjectTemplateAction");
 
         //then
-        Assert.assertEquals(5, (int)(dataSet.getStat(false).get(SDNGDataSet.Fields.PerformedActions.GET_DT_OBJECT_ACTIONS)));
+        Assert.assertEquals(5, (int)(dataSet.getStat(false).get(PerformedActions.GET_DT_OBJECT_ACTIONS)));
     }
 
     @Test
@@ -136,6 +136,6 @@ public class ActionDoneParserTest {
         parser.parseLine(dataSet, "Done(777):GetCatalogAction");
 
         //then
-        Assert.assertEquals(3, (int)(dataSet.getStat(false).get(SDNGDataSet.Fields.PerformedActions.GET_CATALOGS_ACTIONS)));
+        Assert.assertEquals(3, (int)(dataSet.getStat(false).get(PerformedActions.GET_CATALOGS_ACTIONS)));
     }
 }

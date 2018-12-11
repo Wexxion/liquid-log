@@ -1,11 +1,6 @@
-<%@page import="ru.naumen.perfhouse.statdata.DataType"%>
 <%@page import="ru.naumen.perfhouse.statdata.Constants"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="java.util.Map" %>
-<%@ page import="java.util.List" %>
-<%@ page import="java.util.Date" %>
-<%@ page import="org.influxdb.dto.QueryResult.Series" %>
-<%@ page import="ru.naumen.sd40.log.parser.Parsers.SDNG.SDNGDataSet" %>
+<%@ page import="ru.naumen.sd40.log.parser.Parsers.SDNG.PerformedActionsDataType" %>
 
 <html>
 
@@ -26,15 +21,15 @@
 <script src="http://code.highcharts.com/highcharts.js"></script>
 <%
     Number times[] = (Number[])request.getAttribute(Constants.TIME);
-    Number add[]=  (Number[])request.getAttribute(SDNGDataSet.Fields.PerformedActions.ADD_ACTIONS);
-    Number edit[] = (Number[])request.getAttribute(SDNGDataSet.Fields.PerformedActions.EDIT_ACTIONS);
-    Number catalogs[] = (Number[])request.getAttribute(SDNGDataSet.Fields.PerformedActions.GET_CATALOGS_ACTIONS);
-    Number list[] = (Number[])request.getAttribute(SDNGDataSet.Fields.PerformedActions.LIST_ACTIONS);
-    Number comment[] = (Number[])request.getAttribute(SDNGDataSet.Fields.PerformedActions.COMMENT_ACTIONS);
-    Number form[] = (Number[])request.getAttribute(SDNGDataSet.Fields.PerformedActions.GET_FORM_ACTIONS);
-    Number dtos[] = (Number[])request.getAttribute(SDNGDataSet.Fields.PerformedActions.GET_DT_OBJECT_ACTIONS);
-    Number search[] = (Number[])request.getAttribute(SDNGDataSet.Fields.PerformedActions.SEARCH_ACTIONS);
-    Number actionsSumm[] = (Number[])request.getAttribute(SDNGDataSet.Fields.PerformedActions.ACTIONS_COUNT);
+    Number add[]=  (Number[])request.getAttribute(PerformedActionsDataType.ADD_ACTIONS);
+    Number edit[] = (Number[])request.getAttribute(PerformedActionsDataType.EDIT_ACTIONS);
+    Number catalogs[] = (Number[])request.getAttribute(PerformedActionsDataType.GET_CATALOGS_ACTIONS);
+    Number list[] = (Number[])request.getAttribute(PerformedActionsDataType.LIST_ACTIONS);
+    Number comment[] = (Number[])request.getAttribute(PerformedActionsDataType.COMMENT_ACTIONS);
+    Number form[] = (Number[])request.getAttribute(PerformedActionsDataType.GET_FORM_ACTIONS);
+    Number dtos[] = (Number[])request.getAttribute(PerformedActionsDataType.GET_DT_OBJECT_ACTIONS);
+    Number search[] = (Number[])request.getAttribute(PerformedActionsDataType.SEARCH_ACTIONS);
+    Number actionsSumm[] = (Number[])request.getAttribute(PerformedActionsDataType.ACTIONS_COUNT);
     
     
   //Prepare links
@@ -45,7 +40,7 @@
   	Object month = request.getAttribute("month");
   	Object day = request.getAttribute("day");
       
-      String countParam = (String)request.getParameter("count");
+      String countParam = request.getParameter("count");
       
   	String params = "";
   	String datePath = "";

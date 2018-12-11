@@ -1,10 +1,6 @@
 <%@page import="ru.naumen.perfhouse.statdata.Constants"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="java.util.Map" %>
-<%@ page import="java.util.List" %>
-<%@ page import="java.util.Date" %>
-<%@ page import="org.influxdb.dto.QueryResult.Series" %>
-<%@ page import="ru.naumen.sd40.log.parser.Parsers.TOP.TopDataSet" %>
+<%@ page import="ru.naumen.sd40.log.parser.Parsers.TOP.TopDataType" %>
 
 <html>
 
@@ -33,12 +29,12 @@
 <script src="http://code.highcharts.com/highcharts.js"></script>
 <%
     Number times[] = (Number[])request.getAttribute(Constants.TIME);
-    Number avgLa[]=  (Number[])request.getAttribute(TopDataSet.Fields.AVG_LA);
-    Number avgCpu[]=  (Number[])request.getAttribute(TopDataSet.Fields.AVG_CPU);
-    Number avgMem[]=  (Number[])request.getAttribute(TopDataSet.Fields.AVG_MEM);
-    Number maxLa[]=  (Number[])request.getAttribute(TopDataSet.Fields.MAX_LA);
-    Number maxCpu[]=  (Number[])request.getAttribute(TopDataSet.Fields.MAX_CPU);
-    Number maxMem[]=  (Number[])request.getAttribute(TopDataSet.Fields.MAX_MEM);
+    Number avgLa[]=  (Number[])request.getAttribute(TopDataType.AVG_LA);
+    Number avgCpu[]=  (Number[])request.getAttribute(TopDataType.AVG_CPU);
+    Number avgMem[]=  (Number[])request.getAttribute(TopDataType.AVG_MEM);
+    Number maxLa[]=  (Number[])request.getAttribute(TopDataType.MAX_LA);
+    Number maxCpu[]=  (Number[])request.getAttribute(TopDataType.MAX_CPU);
+    Number maxMem[]=  (Number[])request.getAttribute(TopDataType.MAX_MEM);
     
   //Prepare links
   	String path="";

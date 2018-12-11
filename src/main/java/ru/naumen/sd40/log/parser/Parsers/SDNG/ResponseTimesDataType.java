@@ -1,10 +1,12 @@
 package ru.naumen.sd40.log.parser.Parsers.SDNG;
 
 import com.google.common.collect.Lists;
+import org.springframework.stereotype.Component;
 import ru.naumen.sd40.log.parser.Parsers.IDataType;
 
 import java.util.List;
 
+@Component
 public class ResponseTimesDataType implements IDataType {
     public static final String PERCENTILE50 = "percent50";
     public static final String PERCENTILE95 = "percent95";

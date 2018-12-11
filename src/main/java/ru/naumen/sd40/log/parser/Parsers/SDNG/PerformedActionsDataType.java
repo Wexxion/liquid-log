@@ -1,10 +1,12 @@
 package ru.naumen.sd40.log.parser.Parsers.SDNG;
 
 import com.google.common.collect.Lists;
+import org.springframework.stereotype.Component;
 import ru.naumen.sd40.log.parser.Parsers.IDataType;
 
 import java.util.List;
 
+@Component
 public class PerformedActionsDataType implements IDataType {
     public static final String ADD_ACTIONS = "addActions";
     public static final String EDIT_ACTIONS = "editActions";
