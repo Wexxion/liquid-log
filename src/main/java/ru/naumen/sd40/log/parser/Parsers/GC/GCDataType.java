@@ -16,4 +16,14 @@ public class GCDataType implements IDataType {
     public List<String> getProps() {
         return Lists.newArrayList(GCTIMES, AVARAGE_GC_TIME, MAX_GC_TIME);
     }
+
+    @Override
+    public String getPrefix() {
+        return "gc";
+    }
+
+    @Override
+    public String getName() {
+        return "Garbage Collection";
+    }
 }

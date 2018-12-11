@@ -1,50 +1,22 @@
 package ru.naumen.perfhouse.influx;
 
-import static ru.naumen.perfhouse.statdata.Constants.GarbageCollection.AVARAGE_GC_TIME;
-import static ru.naumen.perfhouse.statdata.Constants.GarbageCollection.GCTIMES;
-import static ru.naumen.perfhouse.statdata.Constants.GarbageCollection.MAX_GC_TIME;
-import static ru.naumen.perfhouse.statdata.Constants.PerformedActions.ADD_ACTIONS;
-import static ru.naumen.perfhouse.statdata.Constants.PerformedActions.COMMENT_ACTIONS;
-import static ru.naumen.perfhouse.statdata.Constants.PerformedActions.EDIT_ACTIONS;
-import static ru.naumen.perfhouse.statdata.Constants.PerformedActions.GET_DT_OBJECT_ACTIONS;
-import static ru.naumen.perfhouse.statdata.Constants.PerformedActions.GET_FORM_ACTIONS;
-import static ru.naumen.perfhouse.statdata.Constants.PerformedActions.LIST_ACTIONS;
-import static ru.naumen.perfhouse.statdata.Constants.PerformedActions.SEARCH_ACTIONS;
-import static ru.naumen.perfhouse.statdata.Constants.PerformedActions.GET_CATALOGS_ACTIONS;
-import static ru.naumen.perfhouse.statdata.Constants.ResponseTimes.*;
-import static ru.naumen.perfhouse.statdata.Constants.Top.AVG_CPU;
-import static ru.naumen.perfhouse.statdata.Constants.Top.AVG_LA;
-import static ru.naumen.perfhouse.statdata.Constants.Top.AVG_MEM;
-import static ru.naumen.perfhouse.statdata.Constants.Top.MAX_CPU;
-import static ru.naumen.perfhouse.statdata.Constants.Top.MAX_LA;
-import static ru.naumen.perfhouse.statdata.Constants.Top.MAX_MEM;
-
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-
-import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import org.influxdb.InfluxDB;
 import org.influxdb.InfluxDBFactory;
 import org.influxdb.dto.BatchPoints;
 import org.influxdb.dto.Point;
-import org.influxdb.dto.Point.Builder;
 import org.influxdb.dto.Query;
 import org.influxdb.dto.QueryResult;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
 import ru.naumen.perfhouse.statdata.Constants;
-import ru.naumen.sd40.log.parser.Parsers.GC.GCDataSet;
 import ru.naumen.sd40.log.parser.Parsers.IDataSet;
-import ru.naumen.sd40.log.parser.Parsers.SDNG.SDNGDataSet;
-import ru.naumen.sd40.log.parser.Parsers.TOP.TopDataSet;
 
-import static ru.naumen.sd40.log.parser.NumberUtils.prepareDouble;
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by doki on 24.10.16.

@@ -23,4 +23,14 @@ public class ResponseTimesDataType implements IDataType {
     public List<String> getProps() {
         return Lists.newArrayList(COUNT, ERRORS, MEAN, STDDEV, PERCENTILE50, PERCENTILE95, PERCENTILE99, PERCENTILE999, MAX);
     }
+
+    @Override
+    public String getPrefix() {
+        return "responses";
+    }
+
+    @Override
+    public String getName() {
+        return "Responses";
+    }
 }

@@ -23,4 +23,14 @@ public class PerformedActionsDataType implements IDataType {
         return Lists.newArrayList(ADD_ACTIONS, EDIT_ACTIONS, LIST_ACTIONS, COMMENT_ACTIONS, ACTIONS_COUNT,
                 GET_FORM_ACTIONS, GET_DT_OBJECT_ACTIONS, GET_CATALOGS_ACTIONS, SEARCH_ACTIONS);
     }
+
+    @Override
+    public String getPrefix() {
+        return "actions";
+    }
+
+    @Override
+    public String getName() {
+        return "Performed actions";
+    }
 }

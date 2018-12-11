@@ -64,11 +64,11 @@
     <p>Feel free to hide/show specific data by clicking on chart's legend</p>
     <ul class="nav nav-pills">
         <li class="nav-item"><a class="nav-link active">Your chart type (active)</a></li>
-        <c:forEach items="${charts}" var="chart">
+        <c:forEach items="${dataTypes}" var="dataType">
             <li class="nav-item">
                 <a class="btn btn-outline-primary"
-                   href="/history/${client}<%=custom %>/${chart.prefix}<%=path%>">
-                        ${chart.name}
+                   href="/history/${client}<%=custom %>/${dataType.getPrefix()}<%=path%>">
+                        ${dataType.getName()}
                 </a>
             </li>
         </c:forEach>

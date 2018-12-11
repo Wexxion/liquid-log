@@ -19,4 +19,14 @@ public class TopDataType implements IDataType {
     public List<String> getProps() {
         return Lists.newArrayList(AVG_LA, AVG_CPU, AVG_MEM, MAX_LA, MAX_CPU, MAX_MEM);
     }
+
+    @Override
+    public String getPrefix() {
+        return "top";
+    }
+
+    @Override
+    public String getName() {
+        return "Top Data";
+    }
 }
