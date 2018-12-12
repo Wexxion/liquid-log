@@ -1,6 +1,6 @@
 package ru.naumen.sd40.log.parser;
 
-import ru.naumen.sd40.log.parser.Parsers.*;
+import ru.naumen.sd40.log.parser.parsers.*;
 
 import java.text.ParseException;
 import java.util.Date;

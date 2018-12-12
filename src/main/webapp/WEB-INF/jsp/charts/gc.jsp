@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="ru.naumen.perfhouse.statdata.Constants"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="ru.naumen.sd40.log.parser.Parsers.GC.GCDataType" %>
+<%@ page import="ru.naumen.sd40.log.parser.parsers.gc.GCDataType" %>
 
 <html>
 
@@ -183,7 +183,7 @@
 
         yAxis: {
             title: {
-                text: 'GC'
+                text: 'gc'
             },
             plotLines: [{
                 value: 0,
@@ -215,20 +215,20 @@
             }
         },
         series: [{
-            name: 'GC Performed',
+            name: 'gc Performed',
             data: gcTimes,
             visible: gcTimesvisible,
             unit: 'times',
             turboThreshold: 10000
         }, {
-            name: 'Average GC Time',
+            name: 'Average gc Time',
             data: gcAvg,
             visible: avgGcTimevisible,
             unit: 'ms',
             turboThreshold: 10000
 
         }, {
-            name: 'Max GC Time',
+            name: 'Max gc Time',
             data: gcMaxTime,
             visible: maxGcTimevisible,
             unit: 'ms',

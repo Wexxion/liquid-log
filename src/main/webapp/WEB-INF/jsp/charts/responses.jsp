@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="ru.naumen.perfhouse.statdata.Constants"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="ru.naumen.sd40.log.parser.Parsers.SDNG.ResponseTimesDataType" %>
+<%@ page import="ru.naumen.sd40.log.parser.parsers.sdng.ResponseTimesDataType" %>
 
 <html>
 

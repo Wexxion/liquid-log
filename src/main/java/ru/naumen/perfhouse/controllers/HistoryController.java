@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ru.naumen.perfhouse.statdata.StatData;
 import ru.naumen.perfhouse.statdata.StatDataService;
-import ru.naumen.sd40.log.parser.Parsers.IDataType;
+import ru.naumen.sd40.log.parser.parsers.IDataType;
 
 import javax.inject.Inject;
 import java.text.ParseException;

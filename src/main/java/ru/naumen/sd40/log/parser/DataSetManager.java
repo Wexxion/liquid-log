@@ -1,8 +1,8 @@
 package ru.naumen.sd40.log.parser;
 
 import ru.naumen.perfhouse.influx.ILogStorage;
-import ru.naumen.sd40.log.parser.Parsers.IDataSet;
-import ru.naumen.sd40.log.parser.Parsers.IDataSetCreator;
+import ru.naumen.sd40.log.parser.parsers.IDataSet;
+import ru.naumen.sd40.log.parser.parsers.IDataSetCreator;
 
 class DataSetManager {
     private final ILogStorage logSaver;
