@@ -4,8 +4,8 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
 import ru.naumen.perfhouse.influx.ILogStorage;
-import ru.naumen.sd40.log.parser.Parsers.IDataSet;
-import ru.naumen.sd40.log.parser.Parsers.IDataSetCreator;
+import ru.naumen.sd40.log.parser.parsers.IDataSet;
+import ru.naumen.sd40.log.parser.parsers.IDataSetCreator;
 
 public class DataSetManagerTests {
     @Test

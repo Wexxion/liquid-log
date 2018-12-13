@@ -2,31 +2,28 @@ package ru.naumen.sd40.log.parser;
 
 import org.junit.Assert;
 import org.junit.Test;
-import ru.naumen.sd40.log.parser.Parsers.IDataParser;
-import ru.naumen.sd40.log.parser.Parsers.SDNG.SDNGDataParser;
-import ru.naumen.sd40.log.parser.Parsers.SDNG.SDNGDataSet;
-import ru.naumen.sd40.log.parser.Parsers.SDNG.SDNGLogParser;
-import ru.naumen.sd40.log.parser.Parsers.SDNG.SDNGTimeParser;
+import ru.naumen.sd40.log.parser.parsers.IDataParser;
+import ru.naumen.sd40.log.parser.parsers.sdng.*;
 
 public class ActionDoneParserTest {
 
     @Test
     public void mustParseAddAction() {
         //given
-        SDNGDataSet dataSet = new SDNGDataSet();
+        SDNGDataSet dataSet = new SDNGDataSet(0);
         IDataParser parser = new SDNGDataParser();
 
         //when
         parser.parseLine(dataSet,"Done(10): AddObjectAction");
 
         //then
-        Assert.assertEquals(1, dataSet.getActionCounters(SDNGDataSet.ActionType.AddObjectAction).intValue());
+        Assert.assertEquals(1, (int)(dataSet.getStat(false).get(PerformedActionsDataType.ADD_ACTIONS)));
     }
 
     @Test
     public void mustParseFormActions() {
         //given
-        SDNGDataSet dataSet = new SDNGDataSet();
+        SDNGDataSet dataSet = new SDNGDataSet(0);
         IDataParser parser = new SDNGDataParser();
 
         //when
@@ -34,26 +31,26 @@ public class ActionDoneParserTest {
         parser.parseLine(dataSet,"Done(1): GetAddFormContextDataAction");
 
         //then
-        Assert.assertEquals(2, dataSet.getActionCounters(SDNGDataSet.ActionType.GetFormAction).intValue());
+        Assert.assertEquals(2, (int)(dataSet.getStat(false).get(PerformedActionsDataType.GET_FORM_ACTIONS)));
     }
 
     @Test
     public void mustParseEditObject() {
         //given
-        SDNGDataSet dataSet = new SDNGDataSet();
+        SDNGDataSet dataSet = new SDNGDataSet(0);
         IDataParser parser = new SDNGDataParser();
 
         //when
         parser.parseLine(dataSet,"Done(10): EditObjectAction");
 
         //then
-        Assert.assertEquals(1, dataSet.getActionCounters(SDNGDataSet.ActionType.EditObjectsAction).intValue());
+        Assert.assertEquals(1, (int)(dataSet.getStat(false).get(PerformedActionsDataType.EDIT_ACTIONS)));
     }
 
     @Test
     public void mustParseSearchObject(){
         //given
-        SDNGDataSet dataSet = new SDNGDataSet();
+        SDNGDataSet dataSet = new SDNGDataSet(0);
         IDataParser parser = new SDNGDataParser();
 
         //when
@@ -66,13 +63,13 @@ public class ActionDoneParserTest {
         parser.parseLine(dataSet,"Done(10): ExtendedSearchByFilterAction");
 
         //then
-        Assert.assertEquals(7, dataSet.getActionCounters(SDNGDataSet.ActionType.SearchAction).intValue());
+        Assert.assertEquals(7, (int)(dataSet.getStat(false).get(PerformedActionsDataType.SEARCH_ACTIONS)));
     }
 
     @Test
     public void mustParseGetList(){
         //given
-        SDNGDataSet dataSet = new SDNGDataSet();
+        SDNGDataSet dataSet = new SDNGDataSet(0);
         IDataParser parser = new SDNGDataParser();
 
         //when
@@ -85,13 +82,13 @@ public class ActionDoneParserTest {
         parser.parseLine(dataSet, "Done(10): GetDtObjectForRelObjListAction");
 
         //then
-        Assert.assertEquals(7, dataSet.getActionCounters(SDNGDataSet.ActionType.GetListAction).intValue());
+        Assert.assertEquals(7, (int)(dataSet.getStat(false).get(PerformedActionsDataType.LIST_ACTIONS)));
     }
 
     @Test
     public void mustParseComment(){
         //given
-        SDNGDataSet dataSet = new SDNGDataSet();
+        SDNGDataSet dataSet = new SDNGDataSet(0);
         IDataParser parser = new SDNGDataParser();
 
         //when
@@ -103,13 +100,13 @@ public class ActionDoneParserTest {
         parser.parseLine(dataSet, "Done(10): GetCommentDtObjectTemplateAction");
 
         //then
-        Assert.assertEquals(6, dataSet.getActionCounters(SDNGDataSet.ActionType.CommentAction).intValue());
+        Assert.assertEquals(6, (int)(dataSet.getStat(false).get(PerformedActionsDataType.COMMENT_ACTIONS)));
     }
 
     @Test
     public void mustParseDtObject(){
         //given
-        SDNGDataSet dataSet = new SDNGDataSet();
+        SDNGDataSet dataSet = new SDNGDataSet(0);
         IDataParser parser = new SDNGDataParser();
 
         //when
@@ -120,13 +117,13 @@ public class ActionDoneParserTest {
         parser.parseLine(dataSet, "Done(10): GetDtObjectTemplateAction");
 
         //then
-        Assert.assertEquals(5, dataSet.getActionCounters(SDNGDataSet.ActionType.GetDtObjectAction).intValue());
+        Assert.assertEquals(5, (int)(dataSet.getStat(false).get(PerformedActionsDataType.GET_DT_OBJECT_ACTIONS)));
     }
 
     @Test
     public void mustParseCatalogs(){
         //given
-        SDNGDataSet dataSet = new SDNGDataSet();
+        SDNGDataSet dataSet = new SDNGDataSet(0);
         IDataParser parser = new SDNGDataParser();
 
         //when
@@ -136,6 +133,6 @@ public class ActionDoneParserTest {
         parser.parseLine(dataSet, "Done(777):GetCatalogAction");
 
         //then
-        Assert.assertEquals(3, dataSet.getActionCounters(SDNGDataSet.ActionType.GetCatalogsAction).intValue());
+        Assert.assertEquals(3, (int)(dataSet.getStat(false).get(PerformedActionsDataType.GET_CATALOGS_ACTIONS)));
     }
 }

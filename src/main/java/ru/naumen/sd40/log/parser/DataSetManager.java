@@ -1,8 +1,8 @@
 package ru.naumen.sd40.log.parser;
 
 import ru.naumen.perfhouse.influx.ILogStorage;
-import ru.naumen.sd40.log.parser.Parsers.IDataSet;
-import ru.naumen.sd40.log.parser.Parsers.IDataSetCreator;
+import ru.naumen.sd40.log.parser.parsers.IDataSet;
+import ru.naumen.sd40.log.parser.parsers.IDataSetCreator;
 
 class DataSetManager {
     private final ILogStorage logSaver;
@@ -11,8 +11,7 @@ class DataSetManager {
     private long currentTime;
     private IDataSet currentDataSet;
 
-    DataSetManager(ILogStorage logSaver, IDataSetCreator dataSetCreator,
-                   String dbName, boolean printTrace) {
+    DataSetManager(ILogStorage logSaver, IDataSetCreator dataSetCreator, String dbName, boolean printTrace) {
         logSaver.createDb(dbName, printTrace);
         this.logSaver = logSaver;
         this.dataSetCreator = dataSetCreator;
@@ -25,7 +24,7 @@ class DataSetManager {
         logSaver.saveDataSet(currentTime, currentDataSet);
 
         currentTime = key;
-        currentDataSet = dataSetCreator.create();
+        currentDataSet = dataSetCreator.create(currentTime);
         return currentDataSet;
     }
 }

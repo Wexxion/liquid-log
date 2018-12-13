@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.naumen.sd40.log.parser.LogParser;
 import ru.naumen.sd40.log.parser.LogParserBuilder;
-import ru.naumen.sd40.log.parser.Parsers.ParserSettings;
+import ru.naumen.sd40.log.parser.parsers.ParserSettings;
 
 import javax.inject.Inject;
 import java.io.File;
